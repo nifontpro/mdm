@@ -1,10 +1,16 @@
 import SwiftUI
+import SharedSDK
 
 @main
 struct iOSApp: App {
-	var body: some Scene {
-		WindowGroup {
-			ContentView()
-		}
-	}
+    
+    init() {
+        PlatformSDK().doInit(configuration: PlatformConfiguration())
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
 }

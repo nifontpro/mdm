@@ -13,6 +13,7 @@ android {
 		versionName = "1.0"
 	}
 
+	@Suppress("UnstableApiUsage")
 	buildFeatures {
 		compose = true
 	}
@@ -21,11 +22,6 @@ android {
 //		kotlinCompilerExtensionVersion = "1.4.0"
 //	}
 
-	buildTypes {
-		getByName("release") {
-			isMinifyEnabled = false
-		}
-	}
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17

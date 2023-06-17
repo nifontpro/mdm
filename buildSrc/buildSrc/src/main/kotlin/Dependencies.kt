@@ -5,15 +5,15 @@ object Dependencies {
 	}
 
 	object Settings {
-		const val core = "com.russhwolf:multiplatform-settings:1.0.0-RC"
-		const val noargs = "com.russhwolf:multiplatform-settings-no-arg:1.0.0-RC"
+		const val core = "com.russhwolf:multiplatform-settings:1.0.0"
+		const val noargs = "com.russhwolf:multiplatform-settings-no-arg:1.0.0"
 	}
 
 	object Image {
 		object Coil {
 			const val version = "2.2.2"
-			const val core = "io.coil-kt:coil:2.2.2"
-			const val compose = "io.coil-kt:coil-compose:2.2.2"
+			const val core = "io.coil-kt:coil:$version"
+			const val compose = "io.coil-kt:coil-compose:$version"
 		}
 	}
 
@@ -23,7 +23,7 @@ object Dependencies {
 
 		object Serialization {
 			const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$version"
-			const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1"
+			const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 		}
 
 		object Coroutines {
