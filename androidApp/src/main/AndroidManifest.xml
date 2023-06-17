@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ru.nb.mdm">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MedalistApp"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="MissingApplicationIcon">
         <activity
-            android:name=".android.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

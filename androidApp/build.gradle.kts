@@ -1,30 +1,48 @@
 plugins {
-	kotlin("multiplatform")
 	id("com.android.application")
 	id("org.jetbrains.compose")
-}
-
-kotlin {
-	android()
-	sourceSets {
-		val androidMain by getting {
-			dependencies {
-//				implementation(project(":shared"))
-			}
-		}
-	}
+	kotlin("android")
 }
 
 android {
 	compileSdk = 33
 	defaultConfig {
 		applicationId = "ru.nb.mdm"
-		minSdk = 26
+		minSdk = 24
 		versionCode = 1
 		versionName = "1.0"
+	}
+
+	buildFeatures {
+		compose = true
+	}
+
+//	composeOptions {
+//		kotlinCompilerExtensionVersion = "1.4.0"
+//	}
+
+	buildTypes {
+		getByName("release") {
+			isMinifyEnabled = false
+		}
 	}
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
 	}
+}
+
+dependencies {
+	implementation(project(":common:core"))
+	implementation(project(":common:base-compose"))
+	implementation(project(":common:base-core"))
+
+	implementation(Dependencies.Android.Compose.runtime)
+	implementation(Dependencies.Android.Compose.ui)
+	implementation(Dependencies.Android.Compose.material)
+	implementation(Dependencies.Android.Compose.icons)
+	implementation(Dependencies.Android.Compose.tooling)
+
+	implementation("com.google.android.material:material:1.9.0")
+	implementation("androidx.appcompat:appcompat:1.6.1")
 }

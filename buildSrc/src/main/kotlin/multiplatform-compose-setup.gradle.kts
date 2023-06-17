@@ -40,3 +40,13 @@ kotlin {
 		kotlinOptions.jvmTarget = "17"
 	}
 }
+
+android {
+		buildFeatures {
+			compose = true
+		}
+
+//	composeOptions {
+//		kotlinCompilerExtensionVersion = "1.2.0"
+//	}
+	}

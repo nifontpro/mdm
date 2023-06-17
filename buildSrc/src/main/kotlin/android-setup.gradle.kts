@@ -8,20 +8,12 @@ android {
 	compileSdk = 33
 
 	defaultConfig {
-		minSdk = 21
-	}
-
-	buildFeatures {
-		compose = true
-	}
-
-	composeOptions {
-		kotlinCompilerExtensionVersion = "1.2.0"
+		minSdk = 24
 	}
 
 	compileOptions {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+		sourceCompatibility = JavaVersion.VERSION_17
+		targetCompatibility = JavaVersion.VERSION_17
 	}
 
 	sourceSets {

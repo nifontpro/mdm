@@ -15,7 +15,7 @@ kotlin {
 				implementation(Dependencies.Ktor.json)
 				implementation(Dependencies.Ktor.serialization)
 				implementation(Dependencies.Ktor.negotiation)
-				implementation(Dependencies.Ktor.kotlin_json)
+				implementation(Dependencies.Ktor.kotlinJson)
 				implementation(Dependencies.Ktor.logging)
 
 				implementation(Dependencies.Settings.core)
