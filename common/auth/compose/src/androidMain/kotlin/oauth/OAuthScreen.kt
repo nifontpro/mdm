@@ -59,8 +59,9 @@ fun OAuthScreen() {
 					)
 			}
 
-			null -> {}
 			OAuthAction.LoginAction -> {
+				Log.e("OAuth", "Login action")
+				Log.e("OAuth", "Login action")
 				val customTabsIntent = CustomTabsIntent.Builder().build()
 				val authRequest = appAuth.getAuthRequest()
 				Log.d(
@@ -73,7 +74,9 @@ fun OAuthScreen() {
 				)
 				launcher.launch(openAuthPageIntent)
 				Log.d("OAuth", "2. Open auth page: ${authRequest.toUri()}")
+
 			}
+			null -> {}
 		}
 	}
 }

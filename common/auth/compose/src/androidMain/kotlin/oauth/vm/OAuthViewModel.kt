@@ -3,6 +3,7 @@ package oauth.vm
 import android.util.Log
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
+import kotlinx.coroutines.launch
 import settings.SettingsAuthDataSource
 import settings.model.TokensModel
 
@@ -19,11 +20,10 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	override fun obtainEvent(viewEvent: OAuthEvent) {
 		when (viewEvent) {
 			OAuthEvent.OAuthClick -> openOAuth()
-			is OAuthEvent.SaveAccessToken -> obtainSaveAccessToken(viewEvent.value)
-			is OAuthEvent.SaveRefreshToken -> obtainSaveRefreshToken(viewEvent.value)
 			is OAuthEvent.SaveTokens -> obtainSaveTokens(viewEvent.value)
 			OAuthEvent.LoginClick -> loginAction()
 			OAuthEvent.ShowTokensClick -> showTokensAction()
+			OAuthEvent.ClearAction -> viewAction = null
 		}
 	}
 
@@ -37,17 +37,13 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 //		viewAction = OAuthAction.OpenOAuthScreen
 	}
 
-	private fun obtainSaveAccessToken(value: String) {
-		settingsAuthDataSource.saveAccessToken(accessToken = value)
-	}
-
 	private fun obtainSaveTokens(value: TokensModel) {
-		settingsAuthDataSource.saveTokens(tokens = value)
-		viewState = viewState.copy(tokens = value)
-	}
+		viewAction = null
+		viewState = viewState.copy(tokens = value, isAuth = true)
+		viewModelScope.launch {
+			settingsAuthDataSource.saveTokens(tokens = value)
+		}
 
-	private fun obtainSaveRefreshToken(value: String) {
-		settingsAuthDataSource.saveRefreshToken(refreshToken = value)
 	}
 
 	private fun loginAction() {
@@ -55,8 +51,8 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun showTokensAction() {
-		Log.d("AT", viewState.tokens.accessToken)
-		Log.d("RT", viewState.tokens.refreshToken)
-		Log.d("IT", viewState.tokens.idToken)
+		Log.d("OAuth", viewState.tokens.accessToken)
+		Log.d("OAuth", viewState.tokens.refreshToken)
+		Log.d("OAuth", viewState.tokens.idToken)
 	}
 }
