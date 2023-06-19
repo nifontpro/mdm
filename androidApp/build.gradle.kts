@@ -11,6 +11,10 @@ android {
 		minSdk = 24
 		versionCode = 1
 		versionName = "1.0"
+
+		@Suppress("UnstableApiUsage")
+		manifestPlaceholders["appAuthRedirectScheme"] = "ru.nb.mdm"
+
 	}
 
 	@Suppress("UnstableApiUsage")

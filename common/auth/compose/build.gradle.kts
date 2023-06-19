@@ -7,7 +7,7 @@ kotlin {
 	sourceSets {
 		commonMain {
 			dependencies {
-//                implementation(project(":common:auth:presentation"))
+				implementation(project(":common:auth:presenter"))
 				implementation(project(":common:core-compose"))
 				implementation(project(":common:core-utils"))
 
@@ -17,6 +17,8 @@ kotlin {
 
 				implementation(Dependencies.Other.Navigation.core)
 				implementation(Dependencies.Other.Navigation.compose)
+
+				implementation ("net.openid:appauth:0.11.1")
 			}
 		}
 	}

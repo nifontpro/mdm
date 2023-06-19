@@ -9,6 +9,7 @@ object PlatformSDK {
 	fun init(
 		configuration: PlatformConfiguration
 	) {
+
 		val baseModule = DI.Module(
 			name = "base",
 			init = {
@@ -21,7 +22,7 @@ object PlatformSDK {
 				importAll(
 					baseModule,
 					coreModule,
-//					authModule
+					authModule,
 				)
 			}.direct
 		)

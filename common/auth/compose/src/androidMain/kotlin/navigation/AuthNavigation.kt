@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import oauth.OAuthScreen
 import ru.alexgladkov.odyssey.compose.extensions.flow
 import ru.alexgladkov.odyssey.compose.extensions.present
 import ru.alexgladkov.odyssey.compose.extensions.screen
@@ -26,15 +27,15 @@ fun RootComposeBuilder.authFlow() {
 			) {
 				Text("Login Screen", color = Color.LightGray)
 				Button(onClick = {
-					rootController.present(NavigationTree.Auth.Register.name)
+					rootController.present(NavigationTree.Auth.OAuth.name)
 				}) {
-					Text("To Register")
+					Text("OAuth")
 				}
 			}
 		}
 
-		screen(name = NavigationTree.Auth.Register.name) {
-			Text("RegisterScreen", color = Color.LightGray)
+		screen(name = NavigationTree.Auth.OAuth.name) {
+			OAuthScreen()
 		}
 
 		screen(name = NavigationTree.Auth.Forgot.name) {

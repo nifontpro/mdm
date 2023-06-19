@@ -67,7 +67,7 @@ kotlin {
 			iosSimulatorArm64()
 		).forEach {
 			it.binaries.framework {
-				baseName = "shared"
+				baseName = "common"
 				binaryOption("bundleId", "ru.nb.mdm.common.base-ios")
 			}
 		}
