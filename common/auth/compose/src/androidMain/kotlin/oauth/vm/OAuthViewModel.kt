@@ -1,19 +1,16 @@
 package oauth.vm
 
-import PlatformConfiguration
+import android.util.Log
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
-import net.openid.appauth.AuthorizationService
-import settings.model.TokensModel
 import settings.SettingsAuthDataSource
+import settings.model.TokensModel
 
 class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEvent>(
 	initialState = OAuthViewState(isAuth = false, tokens = TokensModel())
 ) {
 
 	private val settingsAuthDataSource: SettingsAuthDataSource = Inject.instance()
-	private val platformConfiguration: PlatformConfiguration = Inject.instance()
-	private val authService: AuthorizationService = AuthorizationService(platformConfiguration.androidContext)
 
 	init {
 		checkUserLoggedIn()
@@ -24,8 +21,9 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 			OAuthEvent.OAuthClick -> openOAuth()
 			is OAuthEvent.SaveAccessToken -> obtainSaveAccessToken(viewEvent.value)
 			is OAuthEvent.SaveRefreshToken -> obtainSaveRefreshToken(viewEvent.value)
-			is OAuthEvent.SaveTokens -> TODO()
+			is OAuthEvent.SaveTokens -> obtainSaveTokens(viewEvent.value)
 			OAuthEvent.LoginClick -> loginAction()
+			OAuthEvent.ShowTokensClick -> showTokensAction()
 		}
 	}
 
@@ -45,6 +43,7 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 
 	private fun obtainSaveTokens(value: TokensModel) {
 		settingsAuthDataSource.saveTokens(tokens = value)
+		viewState = viewState.copy(tokens = value)
 	}
 
 	private fun obtainSaveRefreshToken(value: String) {
@@ -53,5 +52,11 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 
 	private fun loginAction() {
 		viewAction = OAuthAction.LoginAction
+	}
+
+	private fun showTokensAction() {
+		Log.d("AT", viewState.tokens.accessToken)
+		Log.d("RT", viewState.tokens.refreshToken)
+		Log.d("IT", viewState.tokens.idToken)
 	}
 }

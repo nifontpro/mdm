@@ -8,5 +8,6 @@ sealed class OAuthEvent {
 	data class SaveRefreshToken(val value: String) : OAuthEvent()
 
 	object LoginClick : OAuthEvent()
+	object ShowTokensClick : OAuthEvent()
 	object OAuthClick : OAuthEvent()
 }

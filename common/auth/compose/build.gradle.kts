@@ -5,6 +5,11 @@ plugins {
 
 kotlin {
 	sourceSets {
+		androidMain {
+			dependencies {
+				implementation("androidx.activity:activity-compose:1.7.2")
+			}
+		}
 		commonMain {
 			dependencies {
 				implementation(project(":common:auth:presenter"))

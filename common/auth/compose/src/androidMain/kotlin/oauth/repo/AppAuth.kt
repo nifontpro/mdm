@@ -1,6 +1,7 @@
 package oauth.repo
 
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
@@ -60,6 +61,7 @@ class AppAuth {
 	): TokensModel {
 		return suspendCoroutine { continuation ->
 			authService.performTokenRequest(tokenRequest, getClientAuthentication()) { response, ex ->
+				Log.e("AppAuth", ex?.message ?: "")
 				when {
 					response != null -> {
 						// получение токена произошло успешно
@@ -95,7 +97,7 @@ class AppAuth {
 		private const val SCOPE = "openid"
 		private const val CLIENT_ID = "medalist-client"
 		private const val CLIENT_SECRET = "secret"
-		private const val CALLBACK_URL = "ru.nb.oauth://login"
-		private const val LOGOUT_CALLBACK_URL = "ru.nb.oauth://logout"
+		private const val CALLBACK_URL = "ru.nb.mdm://login"
+		private const val LOGOUT_CALLBACK_URL = "ru.nb.mdm://logout"
 	}
 }
