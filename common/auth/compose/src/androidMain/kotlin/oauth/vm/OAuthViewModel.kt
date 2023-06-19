@@ -43,7 +43,6 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 		viewModelScope.launch {
 			settingsAuthDataSource.saveTokens(tokens = value)
 		}
-
 	}
 
 	private fun loginAction() {
