@@ -38,10 +38,11 @@ object Dependencies {
 	}
 
 	object Ktor {
-		private const val version = "2.1.0"
+		private const val version = "2.3.1"
 		const val core = "io.ktor:ktor-client-core:$version"
 		const val json = "io.ktor:ktor-client-json:$version"
 		const val ios = "io.ktor:ktor-client-ios:$version"
+		const val auth = "io.ktor:ktor-client-auth:$version"
 		const val negotiation = "io.ktor:ktor-client-content-negotiation:$version"
 		const val kotlinJson = "io.ktor:ktor-serialization-kotlinx-json:$version"
 		const val serialization = "io.ktor:ktor-client-serialization:$version"

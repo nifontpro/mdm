@@ -20,7 +20,7 @@ fun OAuthView(
 			Text(text = "Login")
 		}
 
-		Button(onClick = {  }) {
+		Button(onClick = { eventHandler(OAuthEvent.LogoutClick) }) {
 			Text(text = "Logout...")
 		}
 
@@ -28,8 +28,15 @@ fun OAuthView(
 			Text(text = "Show tokens")
 		}
 
-		Text(text = "AT:" + state.tokens.accessToken, color = Color.Cyan)
+		Button(onClick = { eventHandler(OAuthEvent.ProfilesClick) }) {
+			Text(text = "Profiles")
+		}
 
+		if (state.isAuth) {
+			Text(text = "Вход выполнен успешно", color = Color.Cyan)
+		} else {
+			Text(text = "Вход не выполнен", color = Color.Red)
+		}
 	}
 }
 

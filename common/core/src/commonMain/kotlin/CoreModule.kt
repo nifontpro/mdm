@@ -7,7 +7,8 @@ val coreModule = DI.Module("coreModule") {
     importAll(
         serializationModule,
 //        databaseModule,
+        settingsModule,
         ktorModule,
-        settingsModule
+
     )
 }

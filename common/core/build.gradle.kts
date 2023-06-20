@@ -13,6 +13,7 @@ kotlin {
 
 				api(Dependencies.Ktor.core)
 				implementation(Dependencies.Ktor.json)
+				implementation(Dependencies.Ktor.auth)
 				implementation(Dependencies.Ktor.serialization)
 				implementation(Dependencies.Ktor.negotiation)
 				implementation(Dependencies.Ktor.kotlinJson)
@@ -38,6 +39,7 @@ kotlin {
 		val iosArm64Main by getting
 		val iosSimulatorArm64Main by getting
 
+		@Suppress("UNUSED_VARIABLE")
 		val iosMain by creating {
 			dependencies {
 				implementation(Dependencies.Ktor.ios)
