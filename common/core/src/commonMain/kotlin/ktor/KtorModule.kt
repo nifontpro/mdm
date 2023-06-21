@@ -2,6 +2,7 @@ package ktor
 
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
+import di.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.DefaultRequest
@@ -29,6 +30,9 @@ import org.kodein.di.singleton
 internal val ktorModule = DI.Module("ktorModule") {
 
 	bind<HttpClient>() with singleton {
+
+		val settings: Settings = Inject.instance()
+
 		HttpClient(HttpEngineFactory().createEngine()) {
 			install(Logging) {
 				logger = Logger.SIMPLE
@@ -54,27 +58,31 @@ internal val ktorModule = DI.Module("ktorModule") {
 			install(Auth) {
 				bearer {
 					loadTokens {
-						val settings = Settings()
-						val accessToken = settings["access_token", ""]
-						val refreshToken = settings["refresh_token", ""]
+						val accessToken = settings[ACCESS_TOKEN, ""]
+						val refreshToken = settings[REFRESH_TOKEN, ""]
 						BearerTokens(accessToken = accessToken, refreshToken = refreshToken)
 					}
 
 					refreshTokens {
-						val refreshTokenInfo: TokenInfo = client.submitForm(
-							url = "https://accounts.google.com/o/oauth2/token",
+						val refreshResponse: TokenInfo = client.submitForm(
+							url = "$BASE_URL/token",
 							formParameters = parameters {
-								append("grant_type", "refresh_token")
+								append("grant_type", REFRESH_TOKEN)
+								append("client_id", CLIENT_ID)
+								append(REFRESH_TOKEN, settings[REFRESH_TOKEN, ""])
 							}
 						) { markAsRefreshTokenRequest() }.body()
+
+						settings.putString(ACCESS_TOKEN, refreshResponse.accessToken)
+						settings.putString(REFRESH_TOKEN, refreshResponse.refreshToken ?: "")
+						settings.putString(ID_TOKEN, refreshResponse.idToken)
+
 						BearerTokens(
-							accessToken = refreshTokenInfo.accessToken,
-							refreshToken = refreshTokenInfo.refreshToken ?: ""
+							accessToken = refreshResponse.accessToken,
+							refreshToken = refreshResponse.refreshToken ?: ""
 						)
 					}
-
 				}
-//					BearerTokens(accessToken = "123", refreshToken = "456")
 			}
 
 			defaultRequest {
@@ -83,6 +91,13 @@ internal val ktorModule = DI.Module("ktorModule") {
 		}
 	}
 }
+
+private const val HOST = "https://nmedalist.ru:9443/"
+private const val BASE_URL = "${HOST}realms/medalist-realm/protocol/openid-connect"
+private const val ACCESS_TOKEN = "access_token"
+private const val REFRESH_TOKEN = "refresh_token"
+private const val ID_TOKEN = "id_token"
+private const val CLIENT_ID = "medalist-client"
 
 @Serializable
 data class TokenInfo(
