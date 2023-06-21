@@ -18,6 +18,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.header
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.parameters
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.SerialName
@@ -64,23 +65,40 @@ internal val ktorModule = DI.Module("ktorModule") {
 					}
 
 					refreshTokens {
+						val refreshToken = settings[REFRESH_TOKEN, ""]
+						if (refreshToken.isBlank()) return@refreshTokens null
+
 						val refreshResponse: TokenInfo = client.submitForm(
 							url = "$BASE_URL/token",
 							formParameters = parameters {
 								append("grant_type", REFRESH_TOKEN)
 								append("client_id", CLIENT_ID)
-								append(REFRESH_TOKEN, settings[REFRESH_TOKEN, ""])
+								append(REFRESH_TOKEN, refreshToken)
 							}
 						) { markAsRefreshTokenRequest() }.body()
 
-						settings.putString(ACCESS_TOKEN, refreshResponse.accessToken)
-						settings.putString(REFRESH_TOKEN, refreshResponse.refreshToken ?: "")
-						settings.putString(ID_TOKEN, refreshResponse.idToken)
+						when (response.status) {
+							HttpStatusCode.OK -> {
+								settings.putString(ACCESS_TOKEN, refreshResponse.accessToken)
+								settings.putString(REFRESH_TOKEN, refreshResponse.refreshToken ?: "")
+								settings.putString(ID_TOKEN, refreshResponse.idToken)
+							}
+							HttpStatusCode.Unauthorized -> {
+								println("---> Refresh: ${response.status.description}")
+								settings.remove(ACCESS_TOKEN)
+								settings.remove(REFRESH_TOKEN)
+								settings.remove(ID_TOKEN)
+								return@refreshTokens null
+							}
+						}
 
-						BearerTokens(
-							accessToken = refreshResponse.accessToken,
-							refreshToken = refreshResponse.refreshToken ?: ""
-						)
+						refreshResponse.refreshToken?.let { rt ->
+							BearerTokens(
+								accessToken = refreshResponse.accessToken,
+								refreshToken = rt
+							)
+						}
+
 					}
 				}
 			}
@@ -92,8 +110,8 @@ internal val ktorModule = DI.Module("ktorModule") {
 	}
 }
 
-private const val HOST = "https://nmedalist.ru:9443/"
-private const val BASE_URL = "${HOST}realms/medalist-realm/protocol/openid-connect"
+private const val HOST = "https://nmedalist.ru:9443"
+private const val BASE_URL = "$HOST/realms/medalist-realm/protocol/openid-connect"
 private const val ACCESS_TOKEN = "access_token"
 private const val REFRESH_TOKEN = "refresh_token"
 private const val ID_TOKEN = "id_token"
@@ -101,10 +119,10 @@ private const val CLIENT_ID = "medalist-client"
 
 @Serializable
 data class TokenInfo(
-	@SerialName("access_token") val accessToken: String,
-	@SerialName("expires_in") val expiresIn: Int,
+	@SerialName("access_token") val accessToken: String = "",
+	@SerialName("expires_in") val expiresIn: Int = 0,
 	@SerialName("refresh_token") val refreshToken: String? = null,
-	val scope: String,
-	@SerialName("token_type") val tokenType: String,
-	@SerialName("id_token") val idToken: String,
+	val scope: String = "",
+	@SerialName("token_type") val tokenType: String = "",
+	@SerialName("id_token") val idToken: String = "",
 )

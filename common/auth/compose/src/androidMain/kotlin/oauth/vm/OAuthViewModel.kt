@@ -68,9 +68,10 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun showTokensAction() {
-		Log.d("OAuth", viewState.tokens.accessToken)
-		Log.d("OAuth", viewState.tokens.refreshToken)
-		Log.d("OAuth", viewState.tokens.idToken)
+		val tokens  = settingsAuthDataSource.getTokens()
+		Log.d("OAuth", tokens.accessToken)
+		Log.d("OAuth", tokens.refreshToken)
+		Log.d("OAuth", tokens.idToken)
 		viewAction = null
 	}
 
