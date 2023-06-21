@@ -76,9 +76,11 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 
 	private fun getProfiles() {
 		viewModelScope.launch {
-			val users = authRepository.getProfiles()
-			users.forEach {
-				println(it)
+			val response = authRepository.getProfiles()
+			if (response.success) {
+				response.data?.forEach {user->
+					println(user)
+				}
 			}
 		}
 	}

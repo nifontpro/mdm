@@ -39,7 +39,7 @@ fun loginLauncher(
 					Log.d("OAuth", "5. Authentication successful!")
 				}.onFailure { tr ->
 					tr.printStackTrace()
-					Log.e("OAuth", tr.localizedMessage)
+					Log.e("OAuth", "Login error: " + tr.localizedMessage.orEmpty())
 				}
 			}
 		}
