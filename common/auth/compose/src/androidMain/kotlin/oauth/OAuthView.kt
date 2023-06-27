@@ -5,8 +5,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import oauth.vm.OAuthEvent
-import oauth.vm.OAuthViewState
+import oauth.models.OAuthEvent
+import oauth.models.OAuthViewState
 
 @Composable
 fun OAuthView(
@@ -15,6 +15,10 @@ fun OAuthView(
 ) {
 
 	Column {
+
+		Button(onClick = { eventHandler(OAuthEvent.MainFlowClick) }) {
+			Text(text = "Main menu")
+		}
 
 		Button(onClick = { eventHandler(OAuthEvent.LoginClick) }) {
 			Text(text = "Login")

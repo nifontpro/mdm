@@ -12,7 +12,7 @@ import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
-import settings.model.TokensModel
+import model.Tokens
 import kotlin.coroutines.suspendCoroutine
 
 class AppAuth {
@@ -58,14 +58,14 @@ class AppAuth {
 	suspend fun performTokenRequestSuspend(
 		authService: AuthorizationService,
 		tokenRequest: TokenRequest,
-	): TokensModel {
+	): Tokens {
 		return suspendCoroutine { continuation ->
 			authService.performTokenRequest(tokenRequest, getClientAuthentication()) { response, ex ->
 				Log.e("AppAuth", ex?.message ?: "")
 				when {
 					response != null -> {
 						// получение токена произошло успешно
-						val tokens = TokensModel(
+						val tokens = Tokens(
 							accessToken = response.accessToken.orEmpty(),
 							refreshToken = response.refreshToken.orEmpty(),
 							idToken = response.idToken.orEmpty()

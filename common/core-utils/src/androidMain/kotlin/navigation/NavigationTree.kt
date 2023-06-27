@@ -7,7 +7,7 @@ object NavigationTree {
 	}
 
 	enum class Auth {
-		AuthFlow, Login, OAuth, Forgot
+		AuthFlow, OAuth
 	}
 
 	enum class Main {

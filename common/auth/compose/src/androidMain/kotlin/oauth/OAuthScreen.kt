@@ -15,9 +15,8 @@ import net.openid.appauth.AuthorizationService
 import oauth.repo.AppAuth
 import oauth.repo.loginLauncher
 import oauth.repo.logoutLauncher
-import oauth.vm.OAuthAction
-import oauth.vm.OAuthEvent
-import oauth.vm.OAuthViewModel
+import oauth.models.OAuthAction
+import oauth.models.OAuthEvent
 import ru.alexgladkov.odyssey.compose.extensions.present
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import ru.alexgladkov.odyssey.core.LaunchFlag
@@ -85,7 +84,6 @@ fun OAuthScreen() {
 					}
 					eventHandler(OAuthEvent.RemoveTokens)
 				}
-
 			}
 		}
 	}

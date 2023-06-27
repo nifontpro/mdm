@@ -8,6 +8,7 @@ kotlin {
 		commonMain {
 			dependencies {
 				api(project(":common:auth:domain"))
+				api(project(":common:base:domain"))
 				api(project(":common:core"))
 
 				implementation(Dependencies.Other.ViewModel.core)

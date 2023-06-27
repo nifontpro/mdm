@@ -34,7 +34,7 @@ android {
 
 dependencies {
 	implementation(project(":common:core"))
-	implementation(project(":common:base-compose"))
+	implementation(project(":common:base:compose"))
 	implementation(project(":common:base-core"))
 
 	implementation(Dependencies.Android.Compose.runtime)

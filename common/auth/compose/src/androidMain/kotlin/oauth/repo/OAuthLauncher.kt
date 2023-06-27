@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
-import oauth.vm.OAuthEvent
+import oauth.models.OAuthEvent
 
 @Composable
 fun loginLauncher(
