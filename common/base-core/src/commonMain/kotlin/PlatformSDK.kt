@@ -1,4 +1,5 @@
 import di.Inject
+import di.settingsModule
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.direct
@@ -21,6 +22,7 @@ object PlatformSDK {
 			DI {
 				importAll(
 					baseModule,
+					settingsModule,
 					coreModule,
 					authModule,
 				)

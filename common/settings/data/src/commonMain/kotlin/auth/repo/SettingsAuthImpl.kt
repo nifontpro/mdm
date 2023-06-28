@@ -1,20 +1,17 @@
-package settings
+package auth.repo
 
+import auth.model.Tokens
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
-import logger.KLog
-import model.Tokens
 
-class SettingsAuthDataSourceImpl(
+class SettingsAuthImpl(
 	private val settings: Settings
-) : SettingsAuthDataSource {
+) : SettingsAuth {
 
 	override fun saveTokens(tokens: Tokens) {
 		settings.putString(ACCESS_TOKEN, tokens.accessToken)
 		settings.putString(REFRESH_TOKEN, tokens.refreshToken)
 		settings.putString(ID_TOKEN, tokens.idToken)
-		KLog.d("OAuth-AT", tokens.accessToken)
-		KLog.i("OAuth-RT", tokens.refreshToken)
 	}
 
 	override fun getTokens(): Tokens {

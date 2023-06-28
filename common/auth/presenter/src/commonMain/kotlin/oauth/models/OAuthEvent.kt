@@ -1,6 +1,6 @@
 package oauth.models
 
-import model.Tokens
+import auth.model.Tokens
 
 sealed class OAuthEvent {
 	data class SaveTokens(val value: Tokens) : OAuthEvent()

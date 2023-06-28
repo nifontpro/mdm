@@ -32,3 +32,7 @@ include(":common:main:domain")
 //include(":common:main:data")
 include(":common:main:presenter")
 include(":common:main:compose")
+
+include(":common:settings")
+include(":common:settings:domain")
+include(":common:settings:data")

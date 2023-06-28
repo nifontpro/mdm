@@ -1,4 +1,4 @@
-package model
+package auth.model
 
 data class Tokens(
 	val accessToken: String = "",

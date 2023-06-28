@@ -8,6 +8,8 @@ kotlin {
 	sourceSets {
 		val commonMain by getting {
 			dependencies {
+				api(project(":common:settings:domain"))
+
 				api(Dependencies.Kotlin.Serialization.serialization)
 				api(Dependencies.Kotlin.Coroutines.core)
 
@@ -18,9 +20,6 @@ kotlin {
 				implementation(Dependencies.Ktor.negotiation)
 				implementation(Dependencies.Ktor.kotlinJson)
 				implementation(Dependencies.Ktor.logging)
-
-				implementation(Dependencies.Settings.core)
-				implementation(Dependencies.Settings.noargs)
 
 				api(Dependencies.Kodein.core)
 

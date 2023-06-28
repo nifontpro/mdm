@@ -1,6 +1,6 @@
 package oauth.models
 
-import model.Tokens
+import auth.model.Tokens
 
 data class OAuthViewState(
 	val isAuth: Boolean = false,

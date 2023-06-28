@@ -9,6 +9,8 @@ kotlin {
 			dependencies {
 				implementation(project(":common:core"))
 				implementation(project(":common:core-utils"))
+
+				api(project(":common:settings:data"))
 				implementation(project(":common:auth:data"))
 
 				implementation(Dependencies.Kodein.core)

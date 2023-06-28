@@ -1,12 +1,12 @@
+import auth.repo.SettingsAuth
 import ktor.KtorAuthRemoteDataSource
 import settings.AuthRepository
-import settings.SettingsAuthDataSource
 import user.User
 import base.BaseResponse
 
 class AuthRepositoryImpl(
 	private val remoteDataSource: KtorAuthRemoteDataSource,
-	private val cacheDataSource: SettingsAuthDataSource
+	private val cacheDataSource: SettingsAuth
 ) : AuthRepository {
 
 	override suspend fun getProfiles(): BaseResponse<List<User>> {

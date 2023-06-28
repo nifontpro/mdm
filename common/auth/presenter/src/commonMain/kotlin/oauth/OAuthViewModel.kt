@@ -1,16 +1,16 @@
 package oauth
 
+import auth.repo.SettingsAuth
 import base.BaseResponse
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
 import logger.KLog
-import model.Tokens
+import auth.model.Tokens
 import oauth.models.OAuthAction
 import oauth.models.OAuthEvent
 import oauth.models.OAuthViewState
 import settings.AuthRepository
-import settings.SettingsAuthDataSource
 import user.User
 
 class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEvent>(
@@ -18,7 +18,7 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 ) {
 
 	private val authRepository: AuthRepository = Inject.instance()
-	private val settingsAuthDataSource: SettingsAuthDataSource = Inject.instance()
+	private val settingsAuth: SettingsAuth = Inject.instance()
 
 	override fun obtainEvent(viewEvent: OAuthEvent) {
 		when (viewEvent) {
@@ -40,12 +40,12 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	private fun obtainSaveTokens(value: Tokens) {
 		viewState = viewState.copy(tokens = value, isAuth = true)
 		viewModelScope.launch {
-			settingsAuthDataSource.saveTokens(tokens = value)
+			settingsAuth.saveTokens(tokens = value)
 		}
 	}
 
 	fun getIdToken(): String {
-		return settingsAuthDataSource.getIdToken()
+		return settingsAuth.getIdToken()
 	}
 
 	private fun loginAction() {
@@ -57,15 +57,15 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun removeTokens() {
-		settingsAuthDataSource.removeTokens()
+		settingsAuth.removeTokens()
 		viewState = viewState.copy(tokens = Tokens(), isAuth = false)
 	}
 
 	private fun showTokensAction() {
-		val tokens = settingsAuthDataSource.getTokens()
-		KLog.i("AT", tokens.accessToken)
-		KLog.i("RT", tokens.refreshToken)
-		KLog.i("IT", tokens.idToken)
+		val tokens = settingsAuth.getTokens()
+		KLog.i("OAuth: AT", tokens.accessToken)
+		KLog.i("OAuth: RT", tokens.refreshToken)
+		KLog.i("OAuth: IT", tokens.idToken)
 		viewAction = null
 	}
 

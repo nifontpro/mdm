@@ -1,8 +1,8 @@
-package settings
+package auth.repo
 
-import model.Tokens
+import auth.model.Tokens
 
-interface SettingsAuthDataSource {
+interface SettingsAuth {
 	fun saveTokens(tokens: Tokens)
 	fun getTokens(): Tokens
 	fun removeTokens()

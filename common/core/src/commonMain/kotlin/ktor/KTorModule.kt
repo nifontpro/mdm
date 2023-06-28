@@ -1,5 +1,6 @@
 package ktor
 
+import auth.repo.SettingsAuth
 import di.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -16,7 +17,6 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.header
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.parameters
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -26,13 +26,13 @@ import model.toTokens
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.singleton
-import settings.SettingsAuthDataSource
 
 internal val ktorModule = DI.Module("ktorModule") {
 
 	bind<HttpClient>() with singleton {
 
-		val settingsAuthDataSource: SettingsAuthDataSource = Inject.instance()
+		val settingsAuth: SettingsAuth = Inject.instance()
+//		val settings = Settings()
 
 		HttpClient(HttpEngineFactory().createEngine()) {
 			install(Logging) {
@@ -59,7 +59,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 			install(Auth) {
 				bearer {
 					loadTokens {
-						val tokens = settingsAuthDataSource.getTokens()
+						val tokens = settingsAuth.getTokens()
 						KLog.i("OAuth: Load tokens", tokens.toString())
 						BearerTokens(
 							accessToken = tokens.accessToken,
@@ -68,7 +68,8 @@ internal val ktorModule = DI.Module("ktorModule") {
 					}
 
 					refreshTokens {
-						val refreshToken = settingsAuthDataSource.getRefreshToken()
+						val refreshToken = settingsAuth.getRefreshToken()
+						KLog.e("OAuth: Get refresh from local", refreshToken)
 						if (refreshToken.isBlank()) return@refreshTokens null
 
 						val refreshResponse: TokensModel = client.submitForm(
@@ -80,18 +81,9 @@ internal val ktorModule = DI.Module("ktorModule") {
 							}
 						) { markAsRefreshTokenRequest() }.body()
 
-						when (response.status) {
-							HttpStatusCode.OK -> {
-								settingsAuthDataSource.saveTokens(refreshResponse.toTokens())
-							}
+						KLog.e("OAuth: Response", refreshResponse.toString())
 
-							HttpStatusCode.Unauthorized -> {
-								KLog.d("Refresh", response.status.description)
-								settingsAuthDataSource.removeTokens()
-								return@refreshTokens null
-							}
-						}
-
+						settingsAuth.saveTokens(refreshResponse.toTokens())
 						refreshResponse.refreshToken?.let { rt ->
 							BearerTokens(
 								accessToken = refreshResponse.accessToken,
@@ -108,6 +100,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 			}
 		}
 	}
+
 }
 
 private const val AUTH_HOST = "https://nmedalist.ru:9443"

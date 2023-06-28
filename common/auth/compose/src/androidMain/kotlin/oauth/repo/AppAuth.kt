@@ -3,16 +3,15 @@ package oauth.repo
 import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
+import auth.model.Tokens
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
 import net.openid.appauth.EndSessionRequest
-import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
-import model.Tokens
 import kotlin.coroutines.suspendCoroutine
 
 class AppAuth {
@@ -44,16 +43,16 @@ class AppAuth {
 			.build()
 	}
 
-	fun getRefreshTokenRequest(refreshToken: String): TokenRequest {
-		return TokenRequest.Builder(
-			serviceConfiguration,
-			CLIENT_ID
-		)
-			.setGrantType(GrantTypeValues.REFRESH_TOKEN)
-			.setScopes(SCOPE)
-			.setRefreshToken(refreshToken)
-			.build()
-	}
+//	fun getRefreshTokenRequest(refreshToken: String): TokenRequest {
+//		return TokenRequest.Builder(
+//			serviceConfiguration,
+//			CLIENT_ID
+//		)
+//			.setGrantType(GrantTypeValues.REFRESH_TOKEN)
+//			.setScopes(SCOPE)
+//			.setRefreshToken(refreshToken)
+//			.build()
+//	}
 
 	suspend fun performTokenRequestSuspend(
 		authService: AuthorizationService,
