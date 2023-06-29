@@ -14,7 +14,6 @@ android {
 
 		@Suppress("UnstableApiUsage")
 		manifestPlaceholders["appAuthRedirectScheme"] = "ru.nb.mdm"
-
 	}
 
 	@Suppress("UnstableApiUsage")

@@ -42,11 +42,11 @@ kotlin {
 }
 
 android {
-		buildFeatures {
-			compose = true
-		}
-
-//	composeOptions {
-//		kotlinCompilerExtensionVersion = "1.2.0"
-//	}
+	buildFeatures {
+		compose = true
 	}
+
+	defaultConfig {
+		manifestPlaceholders["appAuthRedirectScheme"] = "ru.nb.mdm"
+	}
+}
