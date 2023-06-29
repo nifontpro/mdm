@@ -10,6 +10,7 @@ kotlin {
 				implementation(project(":common:main:presenter"))
 				implementation(project(":common:core-compose"))
 				implementation(project(":common:core-utils"))
+				implementation(project(":common:base:domain"))
 
 				implementation(Dependencies.Other.ViewModel.core)
 				implementation(Dependencies.Other.ViewModel.compose)

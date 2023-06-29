@@ -57,7 +57,7 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun removeTokens() {
-		settingsAuth.removeTokens()
+		settingsAuth.logout()
 		viewState = viewState.copy(tokens = Tokens(), isAuth = false)
 	}
 

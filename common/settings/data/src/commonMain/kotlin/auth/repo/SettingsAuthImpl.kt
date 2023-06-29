@@ -22,10 +22,11 @@ class SettingsAuthImpl(
 		)
 	}
 
-	override fun removeTokens() {
+	override fun logout() {
 		settings.remove(ACCESS_TOKEN)
 		settings.remove(REFRESH_TOKEN)
 		settings.remove(ID_TOKEN)
+		settings.remove(AUTH_ID)
 	}
 
 	override fun saveAccessToken(accessToken: String) {
@@ -52,9 +53,18 @@ class SettingsAuthImpl(
 		return settings[ID_TOKEN, ""]
 	}
 
+	override fun saveAuthId(authId: Long) {
+		settings.putLong(AUTH_ID, authId)
+	}
+
+	override fun getAuthId(): Long {
+		return settings[AUTH_ID, 0L]
+	}
+
 	companion object {
 		private const val ACCESS_TOKEN = "access_token"
 		private const val REFRESH_TOKEN = "refresh_token"
 		private const val ID_TOKEN = "id_token"
+		private const val AUTH_ID = "auth_id"
 	}
 }

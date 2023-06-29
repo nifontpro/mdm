@@ -11,4 +11,8 @@ data class User(
 	val authEmail: String? = null,
 	val post: String? = null,
 	val mainImg: String? = null,
-)
+) {
+	fun getFIO(): String {
+		return "${lastname.orEmpty()} $firstname ${patronymic.orEmpty()}"
+	}
+}
