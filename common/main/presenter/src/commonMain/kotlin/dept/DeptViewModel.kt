@@ -6,7 +6,7 @@ import dept.models.DeptEvent
 import dept.models.DeptViewState
 import di.Inject
 import kotlinx.coroutines.launch
-import settings.AuthRepository
+import repo.AuthRepository
 
 class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	initialState = DeptViewState(

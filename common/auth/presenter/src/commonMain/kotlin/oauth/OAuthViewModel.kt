@@ -1,7 +1,7 @@
 package oauth
 
 import auth.repo.SettingsAuth
-import base.BaseResponse
+import model.response.BaseResponse
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
@@ -10,7 +10,7 @@ import auth.model.Tokens
 import oauth.models.OAuthAction
 import oauth.models.OAuthEvent
 import oauth.models.OAuthViewState
-import settings.AuthRepository
+import repo.AuthRepository
 import user.User
 
 class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEvent>(

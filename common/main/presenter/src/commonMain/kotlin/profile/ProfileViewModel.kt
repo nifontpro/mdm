@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import profile.models.ProfileAction
 import profile.models.ProfileEvent
 import profile.models.ProfileViewState
-import settings.AuthRepository
+import repo.AuthRepository
 
 class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, ProfileEvent>(
 	initialState = ProfileViewState(
