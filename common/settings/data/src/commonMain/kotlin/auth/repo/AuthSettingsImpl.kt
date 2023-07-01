@@ -4,9 +4,9 @@ import auth.model.Tokens
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 
-class SettingsAuthImpl(
+class AuthSettingsImpl(
 	private val settings: Settings
-) : SettingsAuth {
+) : AuthSettings {
 
 	override fun saveTokens(tokens: Tokens) {
 		settings.putString(ACCESS_TOKEN, tokens.accessToken)

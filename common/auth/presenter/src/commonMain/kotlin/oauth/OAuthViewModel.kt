@@ -1,6 +1,6 @@
 package oauth
 
-import auth.repo.SettingsAuth
+import auth.repo.AuthSettings
 import model.response.BaseResponse
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
@@ -18,7 +18,7 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 ) {
 
 	private val authRepository: AuthRepository = Inject.instance()
-	private val settingsAuth: SettingsAuth = Inject.instance()
+	private val authSettings: AuthSettings = Inject.instance()
 
 	override fun obtainEvent(viewEvent: OAuthEvent) {
 		when (viewEvent) {
@@ -40,12 +40,12 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	private fun obtainSaveTokens(value: Tokens) {
 		viewState = viewState.copy(tokens = value, isAuth = true)
 		viewModelScope.launch {
-			settingsAuth.saveTokens(tokens = value)
+			authSettings.saveTokens(tokens = value)
 		}
 	}
 
 	fun getIdToken(): String {
-		return settingsAuth.getIdToken()
+		return authSettings.getIdToken()
 	}
 
 	private fun loginAction() {
@@ -57,12 +57,12 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun removeTokens() {
-		settingsAuth.logout()
+		authSettings.logout()
 		viewState = viewState.copy(tokens = Tokens(), isAuth = false)
 	}
 
 	private fun showTokensAction() {
-		val tokens = settingsAuth.getTokens()
+		val tokens = authSettings.getTokens()
 		KLog.i("OAuth: AT", tokens.accessToken)
 		KLog.i("OAuth: RT", tokens.refreshToken)
 		KLog.i("OAuth: IT", tokens.idToken)

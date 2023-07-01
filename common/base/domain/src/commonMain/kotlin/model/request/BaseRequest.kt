@@ -1,5 +1,8 @@
 package model.request
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class BaseRequest(
 	val page: Int? = null,
 	val pageSize: Int? = null,

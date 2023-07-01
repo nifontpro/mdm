@@ -11,7 +11,6 @@ data class ContextError(
 	val level: Levels = Levels.ERROR,
 ) {
 
-	@Serializable
 	@Suppress("unused")
 	enum class Levels {
 		ERROR,

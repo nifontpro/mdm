@@ -1,6 +1,6 @@
 package profile
 
-import auth.repo.SettingsAuth
+import auth.repo.AuthSettings
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 	)
 ) {
 	private val authRepository: AuthRepository = Inject.instance()
-	private val settingsAuth: SettingsAuth = Inject.instance()
+	private val authSettings: AuthSettings = Inject.instance()
 
 	init {
 		getProfiles()
@@ -39,7 +39,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 	private fun obtainAuthIdChanged(authId: Long) {
 		viewModelScope.launch {
 			viewState = viewState.copy(authId = authId)
-			settingsAuth.saveAuthId(authId)
+			authSettings.saveAuthId(authId)
 		}
 	}
 
@@ -55,7 +55,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 	}
 
 	private fun getAuthId() {
-		val authId = settingsAuth.getAuthId()
+		val authId = authSettings.getAuthId()
 		viewState = viewState.copy(authId = authId)
 	}
 

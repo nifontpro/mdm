@@ -1,5 +1,8 @@
 package model.image
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class BaseImage(
 	override val id: Long? = null,
 	override val imageUrl: String = "",

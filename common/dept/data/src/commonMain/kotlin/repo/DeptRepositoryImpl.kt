@@ -6,11 +6,11 @@ import model.response.BaseResponse
 import rest.DeptRemoteDataSource
 
 class DeptRepositoryImpl(
-	private val deptRemoteDataSource: DeptRemoteDataSource
+	private val remoteDataSource: DeptRemoteDataSource
 ) : DeptRepository {
 
 	override suspend fun getDeptByParentId(request: GetDeptsByParentIdRequest): BaseResponse<List<Dept>> {
-		return deptRemoteDataSource.getDeptByParentId(request = request)
+		return remoteDataSource.getDeptByParentId(request = request)
 	}
 
 }

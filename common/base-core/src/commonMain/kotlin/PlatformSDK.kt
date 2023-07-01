@@ -1,5 +1,6 @@
 import di.Inject
 import di.authModule
+import di.deptModule
 import di.settingsModule
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -26,6 +27,7 @@ object PlatformSDK {
 					settingsModule,
 					coreModule,
 					authModule,
+					deptModule,
 				)
 			}.direct
 		)

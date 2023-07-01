@@ -2,7 +2,7 @@ package auth.repo
 
 import auth.model.Tokens
 
-interface SettingsAuth {
+interface AuthSettings {
 	fun saveTokens(tokens: Tokens)
 	fun getTokens(): Tokens
 	fun logout()

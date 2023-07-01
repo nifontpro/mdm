@@ -7,9 +7,10 @@ kotlin {
 	sourceSets {
 		commonMain {
 			dependencies {
-				api(project(":common:dept:domain"))
-				api(project(":common:base:domain"))
-				api(project(":common:core"))
+				implementation(project(":common:auth:domain"))
+				implementation(project(":common:dept:domain"))
+				implementation(project(":common:base:domain"))
+				implementation(project(":common:core"))
 
 				implementation(Dependencies.Other.ViewModel.core)
 			}

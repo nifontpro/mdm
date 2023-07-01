@@ -1,6 +1,6 @@
 package repo
 
-import auth.repo.SettingsAuth
+import auth.repo.AuthSettings
 import ktor.AuthRemoteDataSource
 import model.request.GetAuthParentIdRequest
 import model.response.BaseResponse
@@ -8,7 +8,7 @@ import user.User
 
 class AuthRepositoryImpl(
 	private val remoteDataSource: AuthRemoteDataSource,
-	private val settingsAuth: SettingsAuth
+	private val authSettings: AuthSettings
 ) : AuthRepository {
 
 	override suspend fun getProfiles(): BaseResponse<List<User>> {
@@ -20,6 +20,6 @@ class AuthRepositoryImpl(
 	}
 
 	override suspend fun isUserLoggedIn(): Boolean {
-		return settingsAuth.getRefreshToken().isNotBlank()
+		return authSettings.getRefreshToken().isNotBlank()
 	}
 }

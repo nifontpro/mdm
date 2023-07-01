@@ -1,6 +1,6 @@
 package ktor
 
-import auth.repo.SettingsAuth
+import auth.repo.AuthSettings
 import di.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -31,7 +31,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 
 	bind<HttpClient>() with singleton {
 
-		val settingsAuth: SettingsAuth = Inject.instance()
+		val authSettings: AuthSettings = Inject.instance()
 //		val settings = Settings()
 
 		HttpClient(HttpEngineFactory().createEngine()) {
@@ -59,7 +59,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 			install(Auth) {
 				bearer {
 					loadTokens {
-						val tokens = settingsAuth.getTokens()
+						val tokens = authSettings.getTokens()
 						KLog.i("OAuth: Load tokens", tokens.toString())
 						BearerTokens(
 							accessToken = tokens.accessToken,
@@ -68,7 +68,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 					}
 
 					refreshTokens {
-						val refreshToken = settingsAuth.getRefreshToken()
+						val refreshToken = authSettings.getRefreshToken()
 						KLog.e("OAuth: Get refresh from local", refreshToken)
 						if (refreshToken.isBlank()) return@refreshTokens null
 
@@ -83,7 +83,7 @@ internal val ktorModule = DI.Module("ktorModule") {
 
 						KLog.e("OAuth: Response", refreshResponse.toString())
 
-						settingsAuth.saveTokens(refreshResponse.toTokens())
+						authSettings.saveTokens(refreshResponse.toTokens())
 						refreshResponse.refreshToken?.let { rt ->
 							BearerTokens(
 								accessToken = refreshResponse.accessToken,

@@ -8,10 +8,13 @@ kotlin {
 		androidMain {
 			dependencies {
 				implementation(Dependencies.Android.composeActivity)
+				implementation(Dependencies.Image.Coil.core)
+				implementation(Dependencies.Image.Coil.compose)
 			}
 		}
 		commonMain {
 			dependencies {
+				implementation(project(":common:dept:domain"))
 				implementation(project(":common:dept:presenter"))
 				implementation(project(":common:core-compose"))
 				implementation(project(":common:core-utils"))

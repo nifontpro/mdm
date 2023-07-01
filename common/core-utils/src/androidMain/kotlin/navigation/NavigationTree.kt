@@ -11,6 +11,6 @@ object NavigationTree {
 	}
 
 	enum class Main {
-		Dashboard, Home, Search, Event, Videos, Profile, Game
+		Dashboard, Home, Depts, Users, Awards, Profile
 	}
 }

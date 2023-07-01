@@ -23,6 +23,7 @@ kotlin {
 
 		androidMain {
 			dependencies {
+				implementation(project(":common:dept:compose"))
 				implementation(Dependencies.Image.Coil.core)
 				implementation(Dependencies.Image.Coil.compose)
 			}

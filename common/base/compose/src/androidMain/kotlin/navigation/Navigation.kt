@@ -11,7 +11,7 @@ fun RootComposeBuilder.generateGraph() {
 		SplashScreen()
 	}
 
-	screen(name = NavigationTree.Main.Game.name) {
+	screen(name = NavigationTree.Main.Users.name) {
 		Text("Hello, Game Detail", color = Color.White)
 	}
 

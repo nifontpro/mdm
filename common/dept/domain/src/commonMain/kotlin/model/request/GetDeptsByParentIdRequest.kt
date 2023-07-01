@@ -1,7 +1,10 @@
 package model.request
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GetDeptsByParentIdRequest(
-	val authId: Long = 0,
-	val parentId: Long = 0,
+	val authId: Long,
+	val parentId: Long,
 	val baseRequest: BaseRequest = BaseRequest()
 )

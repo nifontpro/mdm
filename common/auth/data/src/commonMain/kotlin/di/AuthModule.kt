@@ -10,11 +10,11 @@ import org.kodein.di.singleton
 import repo.AuthRepository
 
 val authModule = DI.Module("authModule") {
-	bind<AuthRepository>() with singleton {
-		AuthRepositoryImpl(remoteDataSource = instance(), settingsAuth = instance())
-	}
-
 	bind<AuthRemoteDataSource>() with provider {
 		AuthRemoteDataSource(httpClient = instance())
+	}
+
+	bind<AuthRepository>() with singleton {
+		AuthRepositoryImpl(remoteDataSource = instance(), authSettings = instance())
 	}
 }
