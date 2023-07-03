@@ -4,5 +4,5 @@ import model.Dept
 
 data class DeptViewState(
 	val depts: List<Dept>,
-	val deptParentId: Long,
+	val currentDeptId: Long,
 )

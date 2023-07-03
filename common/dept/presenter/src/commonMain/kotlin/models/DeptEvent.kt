@@ -1,5 +1,5 @@
 package models
 
 sealed class DeptEvent {
-    object AuthClicked : DeptEvent()
+    object OnResume : DeptEvent()
 }

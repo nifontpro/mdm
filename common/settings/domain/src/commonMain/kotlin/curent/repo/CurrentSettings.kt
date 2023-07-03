@@ -1,6 +1,7 @@
 package curent.repo
 
 interface CurrentSettings {
-	fun saveDeptParentId(deptId: Long)
-	fun getDeptParentId(): Long
+	fun saveCurrentDeptId(deptId: Long)
+	fun getCurrentDeptId(): Long
+	fun removeCurrentDeptId()
 }

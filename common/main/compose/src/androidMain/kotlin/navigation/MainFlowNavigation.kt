@@ -16,25 +16,25 @@ fun RootComposeBuilder.mainFlow() {
 		tabsNavModel = BottomConfiguration()
 	) {
 		tab(DeptTab()) {
-			screen(name = NavigationTree.Main.Home.name) {
+			screen(name = NavigationTree.Main.Depts.name) {
 				DeptScreen()
 			}
 		}
 
 		tab(UserTab()) {
-			screen(name = NavigationTree.Main.Profile.name) {
+			screen(name = NavigationTree.Main.Users.name) {
 				Text("Users", color = Color.Cyan)
 			}
 		}
 
 		tab(AwardTab()) {
-			screen(name = NavigationTree.Main.Home.name) {
+			screen(name = NavigationTree.Main.Awards.name) {
 				Text("Awards", color = Color.Cyan)
 			}
 		}
 
 		tab(ProfileTab()) {
-			screen(name = NavigationTree.Main.Home.name) {
+			screen(name = NavigationTree.Main.Profile.name) {
 				ProfileScreen()
 			}
 		}

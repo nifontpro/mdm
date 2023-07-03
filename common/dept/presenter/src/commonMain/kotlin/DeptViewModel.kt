@@ -3,8 +3,8 @@ import com.adeo.kviewmodel.BaseSharedViewModel
 import curent.repo.CurrentSettings
 import di.Inject
 import kotlinx.coroutines.launch
-import model.request.GetAuthParentIdRequest
-import model.request.GetDeptsByParentIdRequest
+import model.request.GetAuthDeptIdRequest
+import model.request.GetCurrentDeptsRequest
 import models.DeptAction
 import models.DeptEvent
 import models.DeptViewState
@@ -14,7 +14,7 @@ import repo.DeptRepository
 class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	initialState = DeptViewState(
 		depts = emptyList(),
-		deptParentId = 0,
+		currentDeptId = 0,
 	)
 ) {
 	private val authRepository: AuthRepository = Inject.instance()
@@ -28,34 +28,30 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 
 	override fun obtainEvent(viewEvent: DeptEvent) {
 		when (viewEvent) {
-			DeptEvent.AuthClicked -> auth()
+			DeptEvent.OnResume -> onResume()
 		}
-	}
-
-	private fun auth() {
-
 	}
 
 	private fun getSettings() {
 		viewModelScope.launch {
 			val authId = authSettings.getAuthId()
 			if (authId == 0L) return@launch
-			var deptParentId = currentSettings.getDeptParentId()
-			if (deptParentId == 0L) {
-				val response = authRepository.getAuthParentId(GetAuthParentIdRequest(authId))
+			var deptId = currentSettings.getCurrentDeptId()
+			if (deptId == 0L) {
+				val response = authRepository.getAuthDeptId(GetAuthDeptIdRequest(authId))
 				if (response.success) {
-					deptParentId = response.data ?: 0
-					viewState = viewState.copy(deptParentId = deptParentId)
-					currentSettings.saveDeptParentId(deptParentId)
+					deptId = response.data ?: 0
+					viewState = viewState.copy(currentDeptId = deptId)
+					currentSettings.saveCurrentDeptId(deptId)
 				}
 			} else {
-				viewState = viewState.copy(deptParentId = deptParentId)
+				viewState = viewState.copy(currentDeptId = deptId)
 			}
 
-			val response = deptRepository.getDeptByParentId(
-				GetDeptsByParentIdRequest(
+			val response = deptRepository.getCurrentDepts(
+				GetCurrentDeptsRequest(
 					authId = authId,
-					parentId = deptParentId
+					deptId = deptId
 				)
 			)
 			if (response.success) {
@@ -63,4 +59,9 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 			}
 		}
 	}
+
+	private fun onResume(){
+		getSettings()
+	}
+
 }

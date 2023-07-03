@@ -3,8 +3,8 @@ package model.request
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetDeptsByParentIdRequest(
+data class GetCurrentDeptsRequest(
 	val authId: Long,
-	val parentId: Long,
+	val deptId: Long,
 	val baseRequest: BaseRequest = BaseRequest()
 )

@@ -1,9 +1,9 @@
 package repo
 
 import model.Dept
-import model.request.GetDeptsByParentIdRequest
+import model.request.GetCurrentDeptsRequest
 import model.response.BaseResponse
 
 interface DeptRepository {
-	suspend fun getDeptByParentId(request: GetDeptsByParentIdRequest): BaseResponse<List<Dept>>
+	suspend fun getCurrentDepts(request: GetCurrentDeptsRequest): BaseResponse<List<Dept>>
 }

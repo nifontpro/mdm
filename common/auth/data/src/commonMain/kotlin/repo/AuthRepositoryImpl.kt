@@ -2,7 +2,7 @@ package repo
 
 import auth.repo.AuthSettings
 import ktor.AuthRemoteDataSource
-import model.request.GetAuthParentIdRequest
+import model.request.GetAuthDeptIdRequest
 import model.response.BaseResponse
 import user.User
 
@@ -15,8 +15,8 @@ class AuthRepositoryImpl(
 		return remoteDataSource.profiles()
 	}
 
-	override suspend fun getAuthParentId(request: GetAuthParentIdRequest): BaseResponse<Long> {
-		return remoteDataSource.getAuthParentId(request = request)
+	override suspend fun getAuthDeptId(request: GetAuthDeptIdRequest): BaseResponse<Long> {
+		return remoteDataSource.getAuthDeptId(request = request)
 	}
 
 	override suspend fun isUserLoggedIn(): Boolean {

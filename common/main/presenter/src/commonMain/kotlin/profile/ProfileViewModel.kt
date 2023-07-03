@@ -2,6 +2,7 @@ package profile
 
 import auth.repo.AuthSettings
 import com.adeo.kviewmodel.BaseSharedViewModel
+import curent.repo.CurrentSettings
 import di.Inject
 import kotlinx.coroutines.launch
 import profile.models.ProfileAction
@@ -19,6 +20,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 ) {
 	private val authRepository: AuthRepository = Inject.instance()
 	private val authSettings: AuthSettings = Inject.instance()
+	private val currentSettings: CurrentSettings = Inject.instance()
 
 	init {
 		getProfiles()
@@ -40,6 +42,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 		viewModelScope.launch {
 			viewState = viewState.copy(authId = authId)
 			authSettings.saveAuthId(authId)
+			currentSettings.removeCurrentDeptId()
 		}
 	}
 

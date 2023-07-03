@@ -1,5 +1,6 @@
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
@@ -7,29 +8,32 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
+import models.DeptEvent
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 
 @Composable
 fun DeptScreen() {
 	val rootController = LocalRootController.current
 
-	OnLifecycleEvent { owner, event ->
-		println("DeptScreen $event, $owner")
-		when (event) {
-			Lifecycle.Event.ON_RESUME -> {
-
-			}
-			else -> {  }
-		}
-	}
-
 	StoredViewModel({ DeptViewModel() }) { viewModel ->
 		val viewState = viewModel.viewStates().observeAsState()
 		val viewAction = viewModel.viewActions().observeAsState()
+		val eventHandler = remember { viewModel::obtainEvent }
+
+		OnLifecycleEvent { _, event ->
+			println("DeptScreen $event")
+			when (event) {
+				Lifecycle.Event.ON_RESUME -> {
+					eventHandler(DeptEvent.OnResume)
+				}
+
+				else -> {}
+			}
+		}
 
 		DeptView(
 			viewState = viewState.value,
-			eventHandler = viewModel::obtainEvent
+			eventHandler = eventHandler
 		)
 
 		when (viewAction.value) {
