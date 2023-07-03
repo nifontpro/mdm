@@ -43,6 +43,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 			viewState = viewState.copy(authId = authId)
 			authSettings.saveAuthId(authId)
 			currentSettings.removeCurrentDeptId()
+			currentSettings.removeParentDeptId()
 		}
 	}
 

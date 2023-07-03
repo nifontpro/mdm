@@ -15,6 +15,6 @@ val authModule = DI.Module("authModule") {
 	}
 
 	bind<AuthRepository>() with singleton {
-		AuthRepositoryImpl(remoteDataSource = instance(), authSettings = instance(), currentSettings = instance())
+		AuthRepositoryImpl(remoteDataSource = instance(), authSettings = instance())
 	}
 }

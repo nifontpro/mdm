@@ -2,22 +2,17 @@ import auth.repo.AuthSettings
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
-import model.request.GetAuthDeptIdRequest
+import model.request.GetAuthDeptRequest
 import model.request.GetCurrentDeptsRequest
 import models.DeptAction
 import models.DeptEvent
 import models.DeptViewState
-import repo.AuthRepository
 import repo.DeptRepository
 
 class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
-	initialState = DeptViewState(
-		authId = 0,
-		depts = emptyList(),
-		currentDeptId = 0,
-	)
+	initialState = DeptViewState()
 ) {
-	private val authRepository: AuthRepository = Inject.instance()
+
 	private val deptRepository: DeptRepository = Inject.instance()
 	private val authSettings: AuthSettings = Inject.instance()
 
@@ -34,25 +29,45 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	private fun getSettings() {
 		viewModelScope.launch {
 			val authId = authSettings.getAuthId()
-			if (authId == 0L || authId == viewState.authId) return@launch
-			viewState = viewState.copy(authId = authId)
 
-			val deptIdResponse = authRepository.getAuthDeptId(GetAuthDeptIdRequest(authId))
-			val deptId = deptIdResponse.data
-			if (deptIdResponse.success && deptId != null && deptId != viewState.currentDeptId) {
-				viewState = viewState.copy(currentDeptId = deptId)
-			} else {
+			if (authId == 0L) {
+				viewState = viewState.copy(
+					success = false,
+					errors = listOf("Необходимо авторизоваться или выбрать профиль"),
+					authId = 0,
+				)
+				return@launch
+			}
+
+			if (authId == viewState.authId) {
+				return@launch
+			}
+
+			val deptResponse = deptRepository.getAuthDept(GetAuthDeptRequest(authId))
+			val dept = deptResponse.data
+			if (!deptResponse.success || dept == null) {
+				viewState = viewState.copy(
+					success = false,
+					errors = deptResponse.errors.map { it.message },
+					selectDeptId = 0,
+				)
 				return@launch
 			}
 
 			val response = deptRepository.getCurrentDepts(
 				GetCurrentDeptsRequest(
 					authId = authId,
-					deptId = deptId
+					parentId = dept.parentId
 				)
 			)
 			if (response.success) {
-				viewState = viewState.copy(depts = response.data ?: emptyList())
+				viewState = viewState.copy(
+					success = true,
+					authId = authId,
+					selectDeptId = dept.id,
+					parentId = dept.parentId,
+					depts = response.data ?: emptyList(),
+				)
 			}
 		}
 	}

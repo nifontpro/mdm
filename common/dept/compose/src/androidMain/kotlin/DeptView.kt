@@ -21,12 +21,23 @@ import theme.Theme
 
 @Composable
 fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
-	LazyColumn(
-		modifier = Modifier
-			.fillMaxWidth()
-	) {
-		items(items = viewState.depts) { dept ->
-			DeptItem(dept = dept, currentDeptId = viewState.currentDeptId, eventHandler = eventHandler)
+	if (viewState.success) {
+		LazyColumn(
+			modifier = Modifier
+				.fillMaxWidth()
+		) {
+			items(items = viewState.depts) { dept ->
+				DeptItem(dept = dept, currentDeptId = viewState.selectDeptId, eventHandler = eventHandler)
+			}
+		}
+	} else {
+		LazyColumn(
+			modifier = Modifier
+				.fillMaxWidth()
+		) {
+			items(items = viewState.errors) { error ->
+				Text(text = error, color = Color.Red)
+			}
 		}
 	}
 }

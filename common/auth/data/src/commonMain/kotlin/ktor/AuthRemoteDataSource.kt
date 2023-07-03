@@ -6,7 +6,6 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import logger.KLog
-import model.request.GetAuthDeptIdRequest
 import model.response.BaseResponse
 import url.CLIENT_URL
 import user.User
@@ -23,18 +22,6 @@ class AuthRemoteDataSource(
 			response.body()
 		} else {
 			KLog.e("OAuth", "Error ${response.status.description}")
-			BaseResponse.error(emptyList())
-		}
-	}
-
-	suspend fun getAuthDeptId(request: GetAuthDeptIdRequest): BaseResponse<Long> {
-		val response = httpClient.post(userUrl("get_dept_id")) {
-			setBody(request)
-		}
-		return if (response.status == HttpStatusCode.OK) {
-			response.body()
-		} else {
-			KLog.e("Rest", response.status.description)
 			BaseResponse.error(emptyList())
 		}
 	}
