@@ -1,3 +1,4 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,16 +26,17 @@ fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 			.fillMaxWidth()
 	) {
 		items(items = viewState.depts) { dept ->
-			DeptItem(dept, eventHandler)
+			DeptItem(dept = dept, currentDeptId = viewState.currentDeptId, eventHandler = eventHandler)
 		}
 	}
 }
 
 @Composable
-private fun DeptItem(dept: Dept, eventHandler: (DeptEvent) -> Unit) {
+private fun DeptItem(dept: Dept, currentDeptId: Long, eventHandler: (DeptEvent) -> Unit) {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
+			.background(if (dept.id == currentDeptId) Color.Gray else Color.Transparent)
 			.padding(4.dp),
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceBetween

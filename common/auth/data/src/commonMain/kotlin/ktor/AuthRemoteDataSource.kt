@@ -12,7 +12,7 @@ import url.CLIENT_URL
 import user.User
 
 class AuthRemoteDataSource(
-	private val httpClient: HttpClient
+	private val httpClient: HttpClient,
 ) {
 
 	suspend fun profiles(): BaseResponse<List<User>> {

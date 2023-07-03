@@ -11,6 +11,6 @@ val deptModule = DI.Module("deptModule") {
 	}
 
 	bind<DeptRepository>() with singleton {
-		DeptRepositoryImpl(remoteDataSource = instance())
+		DeptRepositoryImpl(deptRemoteDataSource = instance())
 	}
 }

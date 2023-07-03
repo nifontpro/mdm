@@ -1,6 +1,5 @@
 import auth.repo.AuthSettings
 import com.adeo.kviewmodel.BaseSharedViewModel
-import curent.repo.CurrentSettings
 import di.Inject
 import kotlinx.coroutines.launch
 import model.request.GetAuthDeptIdRequest
@@ -13,6 +12,7 @@ import repo.DeptRepository
 
 class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	initialState = DeptViewState(
+		authId = 0,
 		depts = emptyList(),
 		currentDeptId = 0,
 	)
@@ -20,7 +20,6 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	private val authRepository: AuthRepository = Inject.instance()
 	private val deptRepository: DeptRepository = Inject.instance()
 	private val authSettings: AuthSettings = Inject.instance()
-	private val currentSettings: CurrentSettings = Inject.instance()
 
 	init {
 		getSettings()
@@ -35,17 +34,15 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	private fun getSettings() {
 		viewModelScope.launch {
 			val authId = authSettings.getAuthId()
-			if (authId == 0L) return@launch
-			var deptId = currentSettings.getCurrentDeptId()
-			if (deptId == 0L) {
-				val response = authRepository.getAuthDeptId(GetAuthDeptIdRequest(authId))
-				if (response.success) {
-					deptId = response.data ?: 0
-					viewState = viewState.copy(currentDeptId = deptId)
-					currentSettings.saveCurrentDeptId(deptId)
-				}
-			} else {
+			if (authId == 0L || authId == viewState.authId) return@launch
+			viewState = viewState.copy(authId = authId)
+
+			val deptIdResponse = authRepository.getAuthDeptId(GetAuthDeptIdRequest(authId))
+			val deptId = deptIdResponse.data
+			if (deptIdResponse.success && deptId != null && deptId != viewState.currentDeptId) {
 				viewState = viewState.copy(currentDeptId = deptId)
+			} else {
+				return@launch
 			}
 
 			val response = deptRepository.getCurrentDepts(
@@ -60,7 +57,7 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 		}
 	}
 
-	private fun onResume(){
+	private fun onResume() {
 		getSettings()
 	}
 
