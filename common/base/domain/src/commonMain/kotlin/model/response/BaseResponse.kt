@@ -1,7 +1,7 @@
 package model.response
 
 import kotlinx.serialization.Serializable
-import model.biz.ContextError
+import model.biz.helper.ContextError
 
 @Serializable
 data class BaseResponse<out T>(

@@ -1,4 +1,4 @@
-package model.biz
+package model.biz.helper
 
 import kotlinx.serialization.Serializable
 

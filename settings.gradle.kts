@@ -9,6 +9,7 @@ rootProject.name = "mdm"
 
 include(":androidApp")
 include(":common")
+include(":common:cor")
 
 include(":common:core")
 include(":common:core-utils")

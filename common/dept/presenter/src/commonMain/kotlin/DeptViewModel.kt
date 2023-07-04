@@ -1,4 +1,7 @@
 import auth.repo.AuthSettings
+import biz.DeptCommand
+import biz.DeptContext
+import biz.DeptProcessor
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
@@ -15,6 +18,7 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 
 	private val deptRepository: DeptRepository = Inject.instance()
 	private val authSettings: AuthSettings = Inject.instance()
+	private val deptProcessor: DeptProcessor = Inject.instance()
 
 	init {
 		getSettings()
@@ -23,11 +27,20 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	override fun obtainEvent(viewEvent: DeptEvent) {
 		when (viewEvent) {
 			DeptEvent.OnResume -> onResume()
+			DeptEvent.OnTest -> testEvent()
+		}
+	}
+
+	private fun testEvent() {
+		viewModelScope.launch {
+			viewState = process(deptProcessor = deptProcessor, command = DeptCommand.TEST, viewState = viewState)
 		}
 	}
 
 	private fun getSettings() {
 		viewModelScope.launch {
+
+
 			val authId = authSettings.getAuthId()
 
 			if (authId == 0L) {
@@ -76,4 +89,23 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 		getSettings()
 	}
 
+}
+
+suspend fun process(
+	deptProcessor: DeptProcessor,
+	command: DeptCommand,
+	viewState: DeptViewState
+): DeptViewState {
+	val context = DeptContext(
+		command = command,
+		depts = viewState.depts,
+		selectDeptId = viewState.selectDeptId,
+		parentId = viewState.parentId
+	)
+	deptProcessor.exec(context)
+	return DeptViewState(
+		depts = context.depts,
+		selectDeptId = context.selectDeptId,
+		parentId = context.parentId
+	)
 }

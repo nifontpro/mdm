@@ -5,7 +5,7 @@ import repo.DeptRepository
 import repo.DeptRepositoryImpl
 import rest.DeptRemoteDataSource
 
-val deptModule = DI.Module("deptModule") {
+val deptDataModule = DI.Module("deptDataModule") {
 	bind<DeptRemoteDataSource>() with provider {
 		DeptRemoteDataSource(httpClient = instance())
 	}

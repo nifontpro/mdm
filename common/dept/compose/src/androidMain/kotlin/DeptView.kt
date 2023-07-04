@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,12 +23,19 @@ import theme.Theme
 @Composable
 fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 	if (viewState.success) {
-		LazyColumn(
-			modifier = Modifier
-				.fillMaxWidth()
-		) {
-			items(items = viewState.depts) { dept ->
-				DeptItem(dept = dept, currentDeptId = viewState.selectDeptId, eventHandler = eventHandler)
+		Column {
+			Button(
+				onClick = { eventHandler(DeptEvent.OnTest) }
+			) {
+				Text("Test")
+			}
+			LazyColumn(
+				modifier = Modifier
+					.fillMaxWidth()
+			) {
+				items(items = viewState.depts) { dept ->
+					DeptItem(dept = dept, currentDeptId = viewState.selectDeptId, eventHandler = eventHandler)
+				}
 			}
 		}
 	} else {

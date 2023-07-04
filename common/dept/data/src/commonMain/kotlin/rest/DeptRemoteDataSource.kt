@@ -6,7 +6,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import logger.KLog
 import model.Dept
-import model.biz.ContextError
+import model.biz.helper.ContextError
 import model.request.GetAuthDeptRequest
 import model.request.GetCurrentDeptsRequest
 import model.response.BaseResponse
