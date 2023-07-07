@@ -23,6 +23,5 @@ class DeptContext(
 }
 
 enum class DeptCommand : IBaseCommand {
-	TEST,
 	GET_SETTINGS,
 }

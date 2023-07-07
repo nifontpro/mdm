@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package biz.helper
 
 import biz.proc.BaseContext
@@ -50,6 +52,19 @@ fun errorDb(
 	field = repository,
 	group = "db",
 	message = "БД: $description",
+	level = level,
+)
+
+fun restError(
+	repository: String,
+	violationCode: String,
+	description: String,
+	level: ContextError.Levels = ContextError.Levels.ERROR,
+) = ContextError(
+	code = "rest-$repository:$violationCode",
+	field = repository,
+	group = "rest",
+	message = description,
 	level = level,
 )
 

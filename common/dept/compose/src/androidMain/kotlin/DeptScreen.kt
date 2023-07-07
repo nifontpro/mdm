@@ -9,12 +9,11 @@ import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import models.DeptEvent
-import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import vm.DeptViewModel
 
 @Composable
 fun DeptScreen() {
-	val rootController = LocalRootController.current
+//	val rootController = LocalRootController.current
 
 	StoredViewModel({ DeptViewModel() }) { viewModel ->
 		val viewState = viewModel.viewStates().observeAsState()
@@ -22,7 +21,6 @@ fun DeptScreen() {
 		val eventHandler = remember { viewModel::obtainEvent }
 
 		OnLifecycleEvent { _, event ->
-			println("DeptScreen $event")
 			when (event) {
 				Lifecycle.Event.ON_RESUME -> {
 					eventHandler(DeptEvent.OnResume)

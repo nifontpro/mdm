@@ -15,8 +15,6 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	initialState = DeptViewState()
 ) {
 
-	private val deptProcessor: DeptProcessor = Inject.instance()
-
 	init {
 		getSettings()
 	}
@@ -24,19 +22,12 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	override fun obtainEvent(viewEvent: DeptEvent) {
 		when (viewEvent) {
 			DeptEvent.OnResume -> onResume()
-			DeptEvent.OnTest -> testEvent()
-		}
-	}
-
-	private fun testEvent() {
-		viewModelScope.launch {
-			viewState = process(deptProcessor = deptProcessor, command = DeptCommand.TEST, viewState = viewState)
 		}
 	}
 
 	private fun getSettings() {
 		viewModelScope.launch {
-			viewState = process(deptProcessor = deptProcessor, command = DeptCommand.GET_SETTINGS, viewState = viewState)
+			viewState = process(command = DeptCommand.GET_SETTINGS, viewState = viewState)
 		}
 	}
 
@@ -47,10 +38,10 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 }
 
 suspend fun process(
-	deptProcessor: DeptProcessor,
 	command: DeptCommand,
 	viewState: DeptViewState
 ): DeptViewState {
+	val deptProcessor: DeptProcessor = Inject.instance()
 	val context = viewState.toDeptContext(command = command)
 	deptProcessor.exec(context)
 	return context.toDeptViewState()

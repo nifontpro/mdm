@@ -3,6 +3,7 @@ package biz.workers
 import biz.helper.checkResponse
 import biz.proc.ContextState
 import biz.proc.DeptContext
+import biz.proc.getDeptError
 import model.request.GetCurrentDeptsRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
@@ -22,5 +23,9 @@ fun ICorChainDsl<DeptContext>.getDeptList(title: String) = worker {
 			)
 		} ?: return@handle
 
+	}
+
+	except {
+		getDeptError()
 	}
 }
