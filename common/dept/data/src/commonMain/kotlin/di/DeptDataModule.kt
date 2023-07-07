@@ -6,7 +6,7 @@ import repo.DeptRepositoryImpl
 import rest.DeptRemoteDataSource
 
 val deptDataModule = DI.Module("deptDataModule") {
-	bind<DeptRemoteDataSource>() with provider {
+	bind<DeptRemoteDataSource>() with singleton {
 		DeptRemoteDataSource(httpClient = instance())
 	}
 

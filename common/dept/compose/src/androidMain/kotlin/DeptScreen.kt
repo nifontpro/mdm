@@ -10,6 +10,7 @@ import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import models.DeptEvent
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
+import vm.DeptViewModel
 
 @Composable
 fun DeptScreen() {

@@ -1,9 +1,7 @@
-package biz
+package biz.proc
 
+import biz.workers.*
 import model.Dept
-import model.biz.workers.finishOperation
-import model.biz.workers.initStatus
-import model.biz.workers.operation
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -16,6 +14,12 @@ class DeptProcessor : IBaseProcessor<DeptContext> {
 
 		private val businessChain = rootChain<DeptContext> {
 			initStatus()
+
+			operation("Чтение настроек", DeptCommand.GET_SETTINGS) {
+				getAuthIdFromSettings("Получаем authId")
+				getAuthDept("Получаем отдел авторизованного пользователя")
+				getDeptList("Получаем список отделов")
+			}
 
 			operation("Тест", DeptCommand.TEST) {
 				worker("Test") {

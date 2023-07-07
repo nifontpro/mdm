@@ -1,7 +1,7 @@
-package model.biz.workers
+package biz.workers
 
-import model.biz.proc.BaseContext
-import model.biz.proc.ContextState
+import biz.proc.BaseContext
+import biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 

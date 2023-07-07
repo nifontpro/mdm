@@ -1,13 +1,26 @@
-package model.biz.helper
+package biz.helper
 
-import model.biz.proc.BaseContext
-import model.biz.proc.ContextState
+import biz.proc.BaseContext
+import biz.proc.ContextState
+import model.response.BaseResponse
 
 fun BaseContext.addError(error: ContextError) = errors.add(error)
 
 fun BaseContext.fail(error: ContextError) {
 	addError(error)
 	state = ContextState.FAILING
+}
+
+suspend fun <T> BaseContext.checkResponse(operation: suspend () -> BaseResponse<T>): T? {
+	val result = operation()
+	return if (result.success) {
+		pageInfo = result.pageInfo
+		result.data
+	} else {
+		errors.addAll(result.errors)
+		state = ContextState.FAILING
+		null
+	}
 }
 
 fun errorValidation(

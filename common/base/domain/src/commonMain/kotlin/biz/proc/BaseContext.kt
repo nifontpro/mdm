@@ -1,6 +1,6 @@
-package model.biz.proc
+package biz.proc
 
-import model.biz.helper.ContextError
+import biz.helper.ContextError
 import model.response.PageInfo
 
 abstract class BaseContext(
@@ -8,7 +8,7 @@ abstract class BaseContext(
 	open var command: IBaseCommand = BaseCommand.NONE,
 	val errors: MutableList<ContextError> = mutableListOf(),
 
-	var authId: Long = 0,
+	open var authId: Long = 0,
 
 	var authEmail: String = "",
 	var pageInfo: PageInfo? = null,
