@@ -4,6 +4,7 @@ import biz.workers.*
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
 
+@Suppress("RemoveExplicitTypeArguments")
 class DeptProcessor : IBaseProcessor<DeptContext> {
 
 	override suspend fun exec(ctx: DeptContext) = businessChain.exec(ctx)

@@ -1,13 +1,17 @@
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
+import kotlinx.coroutines.launch
+import models.DeptAction
 import models.DeptEvent
 import vm.DeptViewModel
 
@@ -30,14 +34,41 @@ fun DeptScreen() {
 			}
 		}
 
-		DeptView(
-			viewState = viewState.value,
-			eventHandler = eventHandler
-		)
+		val scaffoldState = rememberScaffoldState()
+		val coroutineScope = rememberCoroutineScope()
+
+		LaunchedEffect(viewState.value.errors) {
+			val errors = viewState.value.errors
+			if (errors.isNotEmpty()) {
+				errors.forEach {
+					scaffoldState.snackbarHostState.showSnackbar(it)
+				}
+			}
+		}
+
+		Scaffold(
+			backgroundColor = Color.Black,
+			modifier = Modifier.fillMaxSize(),
+			scaffoldState = scaffoldState // attaching `scaffoldState` to the `Scaffold`
+		) {
+			DeptView(
+				paddingValues = it,
+				viewState = viewState.value,
+				eventHandler = eventHandler
+			)
+		}
 
 		when (viewAction.value) {
 			null -> {}
-			else -> {}
+
+			is DeptAction.Test -> {
+				coroutineScope.launch {
+					scaffoldState.snackbarHostState.showSnackbar(
+						(viewAction.value as DeptAction.Test).message
+					)
+				}
+				eventHandler(DeptEvent.Clear)
+			}
 		}
 	}
 }

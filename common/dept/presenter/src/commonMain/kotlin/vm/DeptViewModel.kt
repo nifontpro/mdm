@@ -21,6 +21,8 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 				DeptEvent.OnResume -> getSettings()
 				DeptEvent.OnTopLevel -> onTopLevel()
 				is DeptEvent.CurrentDeptIdChanged -> obtainCurrentDeptIdChanged(currentDeptId = viewEvent.currentDeptId)
+				is DeptEvent.OnTest -> onTest(message = viewEvent.message)
+				DeptEvent.Clear -> viewAction = null
 			}
 		}
 	}
@@ -30,7 +32,16 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	}
 
 	private suspend fun onTopLevel() {
-		viewState = process(command = DeptCommand.ON_TOP_LEVEL, viewState = viewState)
+		viewState = process(
+			command = DeptCommand.ON_TOP_LEVEL,
+			viewState = viewState,
+			ignoreSuccess = true
+		)
+
+	}
+
+	private fun onTest(message: String) {
+		viewAction = DeptAction.Test(message)
 	}
 
 	private suspend fun obtainCurrentDeptIdChanged(currentDeptId: Long) {
@@ -44,10 +55,11 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 
 suspend fun process(
 	command: DeptCommand,
-	viewState: DeptViewState
+	viewState: DeptViewState,
+	ignoreSuccess: Boolean = false
 ): DeptViewState {
 	val deptProcessor: DeptProcessor = Inject.instance()
 	val context = viewState.toDeptContext(command = command)
 	deptProcessor.exec(context)
-	return context.toDeptViewState()
+	return context.toDeptViewState(ignoreSuccess)
 }

@@ -26,11 +26,18 @@ import models.DeptViewState
 import theme.Theme
 
 @Composable
-fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
+fun DeptView(paddingValues: PaddingValues, viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 	if (viewState.success) {
-		Column {
-			Button(onClick = { eventHandler(DeptEvent.OnTopLevel) }) {
-				Text("Top")
+		Column(
+			modifier = Modifier.padding(paddingValues)
+		) {
+			Row {
+				Button(onClick = { eventHandler(DeptEvent.OnTopLevel) }) {
+					Text("Top")
+				}
+				Button(onClick = { eventHandler(DeptEvent.OnTest("Test data")) }) {
+					Text("Test")
+				}
 			}
 			LazyColumn(
 				modifier = Modifier
@@ -44,6 +51,7 @@ fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 	} else {
 		LazyColumn(
 			modifier = Modifier
+				.padding(paddingValues)
 				.fillMaxWidth()
 		) {
 			items(items = viewState.errors) { error ->

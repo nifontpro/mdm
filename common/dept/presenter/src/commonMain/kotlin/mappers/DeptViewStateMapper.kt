@@ -5,13 +5,13 @@ import biz.proc.DeptCommand
 import biz.proc.DeptContext
 import models.DeptViewState
 
-fun DeptContext.toDeptViewState() = DeptViewState(
+fun DeptContext.toDeptViewState(ignoreSuccess: Boolean = false) = DeptViewState(
 	depts = depts,
 	authId = authId,
 	currentDeptId = currentDeptId,
 	parentId = parentDeptId,
 	onStart = onStart,
-	success = state == ContextState.FINISHING,
+	success = if (ignoreSuccess) true else state == ContextState.FINISHING,
 	errors = errors.map { it.message }
 )
 
