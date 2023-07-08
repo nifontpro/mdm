@@ -1,9 +1,14 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckBox
+import androidx.compose.material.icons.outlined.CheckBoxOutlineBlank
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +33,7 @@ fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 					.fillMaxWidth()
 			) {
 				items(items = viewState.depts) { dept ->
-					DeptItem(dept = dept, currentDeptId = viewState.selectDeptId, eventHandler = eventHandler)
+					DeptItem(dept = dept, currentDeptId = viewState.currentDeptId, eventHandler = eventHandler)
 				}
 			}
 		}
@@ -84,5 +89,15 @@ private fun DeptItem(dept: Dept, currentDeptId: Long, eventHandler: (DeptEvent) 
 				color = Color.LightGray
 			)
 		}
+		Icon(
+			imageVector = if (dept.id == currentDeptId) Icons.Outlined.CheckBox else Icons.Outlined.CheckBoxOutlineBlank,
+			contentDescription = "Selected",
+			tint = Color.LightGray,
+			modifier = Modifier
+				.size(20.dp)
+				.clickable {
+					eventHandler(DeptEvent.CurrentDeptIdChanged(currentDeptId = dept.id))
+				}
+		)
 	}
 }

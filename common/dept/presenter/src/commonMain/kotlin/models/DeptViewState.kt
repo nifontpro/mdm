@@ -5,7 +5,8 @@ import model.Dept
 data class DeptViewState(
 	val authId: Long = 0,
 	val parentId: Long = 0,
-	val selectDeptId: Long = 0,
+	val currentDeptId: Long = 0,
+	val onStart: Boolean = true,
 
 	val depts: List<Dept> = emptyList(),
 

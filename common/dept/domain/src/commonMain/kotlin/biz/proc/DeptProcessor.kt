@@ -14,9 +14,13 @@ class DeptProcessor : IBaseProcessor<DeptContext> {
 			initStatus()
 
 			operation("Чтение настроек", DeptCommand.GET_SETTINGS) {
-				getAuthIdFromSettings("Получаем authId")
-				getAuthDept("Получаем отдел авторизованного пользователя")
+				getCurrentSettings("Получаем начальные настройки")
+				getSettingsOnStart("Получаем начальные настройки при старте")
 				getDeptList("Получаем список отделов")
+			}
+
+			operation("Сохранение в локальное хранилище выбранного отдела", DeptCommand.CHANGE_CURRENT_DEPT) {
+				saveCurrentDeptId("Сохраняем текущий отдел")
 			}
 
 			finishOperation()

@@ -8,8 +8,9 @@ import models.DeptViewState
 fun DeptContext.toDeptViewState() = DeptViewState(
 	depts = depts,
 	authId = authId,
-	selectDeptId = selectDeptId,
-	parentId = parentId,
+	currentDeptId = currentDeptId,
+	parentId = parentDeptId,
+	onStart = onStart,
 	success = state == ContextState.FINISHING,
 	errors = errors.map { it.message }
 )
@@ -18,7 +19,8 @@ fun DeptViewState.toDeptContext(command: DeptCommand) = DeptContext(
 	command = command,
 	depts = depts,
 	authId = authId,
-	selectDeptId = selectDeptId,
-	parentId = parentId
+	currentDeptId = currentDeptId,
+	parentDeptId = parentId,
+	onStart = onStart,
 )
 

@@ -18,7 +18,7 @@ fun ICorChainDsl<DeptContext>.getDeptList(title: String) = worker {
 			deptRepository.getCurrentDepts(
 				request = GetCurrentDeptsRequest(
 					authId = authId,
-					parentId = dept.parentId
+					parentId = parentDeptId
 				)
 			)
 		} ?: return@handle
