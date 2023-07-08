@@ -6,9 +6,9 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import logger.KLog
 import model.Dept
-import biz.helper.ContextError
 import model.request.GetAuthDeptRequest
 import model.request.GetCurrentDeptsRequest
+import model.request.GetDeptByIdRequest
 import model.response.BaseResponse
 import url.CLIENT_URL
 
@@ -31,20 +31,15 @@ class DeptRemoteDataSource(private val httpClient: HttpClient) {
 	 * Получение списка отделов по parentId отдела
 	 */
 	suspend fun getCurrentDepts(request: GetCurrentDeptsRequest): BaseResponse<List<Dept>> {
-		val response = httpClient.post(deptUrl("current_list")) {
+		return httpClient.post(deptUrl("current_list")) {
 			setBody(request)
-		}
+		}.body()
+	}
 
-		return if (response.status == HttpStatusCode.OK) {
-			try {
-				response.body()
-			} catch (e: Exception) {
-				BaseResponse.error(errors = listOf(ContextError(message = e.message.toString())))
-			}
-		} else {
-			KLog.e("Rest: Dept", response.status.description)
-			BaseResponse.error(emptyList())
-		}
+	suspend fun getDeptById(request: GetDeptByIdRequest): BaseResponse<Dept> {
+		return httpClient.post(deptUrl("get_id_m")) {
+			setBody(request)
+		}.body()
 	}
 
 	companion object {

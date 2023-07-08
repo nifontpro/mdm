@@ -28,5 +28,6 @@ class DeptContext(
 
 enum class DeptCommand : IBaseCommand {
 	GET_SETTINGS,
+	ON_TOP_LEVEL,
 	CHANGE_CURRENT_DEPT,
 }

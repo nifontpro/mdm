@@ -6,24 +6,27 @@ import biz.proc.DeptContext
 import biz.proc.DeptContext.Companion.REPO
 import biz.proc.getDeptError
 import logger.KLog
-import model.request.GetCurrentDeptsRequest
+import model.request.GetDeptByIdRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun ICorChainDsl<DeptContext>.getDeptList(title: String) = worker {
+fun ICorChainDsl<DeptContext>.getTopLevelDeptAndParentId(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
 
-		depts = checkResponse {
-			deptRepository.getCurrentDepts(
-				request = GetCurrentDeptsRequest(
+		dept = checkResponse {
+			deptRepository.getDeptById(
+				request = GetDeptByIdRequest(
 					authId = authId,
-					parentId = parentDeptId
+					deptId = parentDeptId
 				)
 			)
 		} ?: return@handle
+
+		parentDeptId = dept.parentId
+		currentSettings.saveParentDeptId(parentDeptId)
 
 	}
 

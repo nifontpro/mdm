@@ -21,7 +21,6 @@ fun DeptScreen() {
 		val eventHandler = remember { viewModel::obtainEvent }
 
 		OnLifecycleEvent { _, event ->
-			println("Dept: $event")
 			when (event) {
 				Lifecycle.Event.ON_RESUME -> {
 					eventHandler(DeptEvent.OnResume)

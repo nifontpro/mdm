@@ -4,6 +4,7 @@ import curent.repo.CurrentSettings
 import model.Dept
 import model.request.GetAuthDeptRequest
 import model.request.GetCurrentDeptsRequest
+import model.request.GetDeptByIdRequest
 import model.response.BaseResponse
 import rest.DeptRemoteDataSource
 
@@ -25,6 +26,10 @@ class DeptRepositoryImpl(
 
 	override suspend fun getCurrentDepts(request: GetCurrentDeptsRequest): BaseResponse<List<Dept>> {
 		return deptRemoteDataSource.getCurrentDepts(request = request)
+	}
+
+	override suspend fun getDeptById(request: GetDeptByIdRequest): BaseResponse<Dept> {
+		return deptRemoteDataSource.getDeptById(request = request)
 	}
 
 }

@@ -10,7 +10,7 @@ class DeptProcessor : IBaseProcessor<DeptContext> {
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<DeptContext> {
 			initStatus()
 
 			operation("Чтение настроек", DeptCommand.GET_SETTINGS) {
@@ -21,6 +21,12 @@ class DeptProcessor : IBaseProcessor<DeptContext> {
 
 			operation("Сохранение в локальное хранилище выбранного отдела", DeptCommand.CHANGE_CURRENT_DEPT) {
 				saveCurrentDeptId("Сохраняем текущий отдел")
+			}
+
+			operation("Переход на уровень вверх", DeptCommand.ON_TOP_LEVEL) {
+				getTopLevelDeptAndParentId("Получаем верхний отдел и parentId")
+				getDeptList("Получаем список отделов")
+//				worker("Игнорируем ошибку") { state = ContextState.RUNNING }
 			}
 
 			finishOperation()

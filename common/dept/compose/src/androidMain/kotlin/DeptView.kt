@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -28,6 +29,9 @@ import theme.Theme
 fun DeptView(viewState: DeptViewState, eventHandler: (DeptEvent) -> Unit) {
 	if (viewState.success) {
 		Column {
+			Button(onClick = { eventHandler(DeptEvent.OnTopLevel) }) {
+				Text("Top")
+			}
 			LazyColumn(
 				modifier = Modifier
 					.fillMaxWidth()

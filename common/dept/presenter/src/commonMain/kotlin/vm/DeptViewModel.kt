@@ -15,34 +15,29 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 	initialState = DeptViewState()
 ) {
 
-//	init {
-//		getSettings()
-//	}
-
 	override fun obtainEvent(viewEvent: DeptEvent) {
-		when (viewEvent) {
-			DeptEvent.OnResume -> onResume()
-			is DeptEvent.CurrentDeptIdChanged -> obtainCurrentDeptIdChanged(currentDeptId = viewEvent.currentDeptId)
-		}
-	}
-
-	private fun getSettings() {
 		viewModelScope.launch {
-			viewState = process(command = DeptCommand.GET_SETTINGS, viewState = viewState)
+			when (viewEvent) {
+				DeptEvent.OnResume -> getSettings()
+				DeptEvent.OnTopLevel -> onTopLevel()
+				is DeptEvent.CurrentDeptIdChanged -> obtainCurrentDeptIdChanged(currentDeptId = viewEvent.currentDeptId)
+			}
 		}
 	}
 
-	private fun obtainCurrentDeptIdChanged(currentDeptId: Long) {
-		viewModelScope.launch {
-			viewState = process(
-				command = DeptCommand.CHANGE_CURRENT_DEPT,
-				viewState = viewState.copy(currentDeptId = currentDeptId)
-			)
-		}
+	private suspend fun getSettings() {
+		viewState = process(command = DeptCommand.GET_SETTINGS, viewState = viewState)
 	}
 
-	private fun onResume() {
-		getSettings()
+	private suspend fun onTopLevel() {
+		viewState = process(command = DeptCommand.ON_TOP_LEVEL, viewState = viewState)
+	}
+
+	private suspend fun obtainCurrentDeptIdChanged(currentDeptId: Long) {
+		viewState = process(
+			command = DeptCommand.CHANGE_CURRENT_DEPT,
+			viewState = viewState.copy(currentDeptId = currentDeptId)
+		)
 	}
 
 }
