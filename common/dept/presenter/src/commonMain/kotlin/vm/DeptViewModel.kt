@@ -23,8 +23,18 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 				is DeptEvent.CurrentDeptIdChanged -> obtainCurrentDeptIdChanged(currentDeptId = viewEvent.currentDeptId)
 				is DeptEvent.OnTest -> onTest(message = viewEvent.message)
 				DeptEvent.Clear -> viewAction = null
+				is DeptEvent.ClickDept -> obtainClickDept(deptId = viewEvent.deptId)
 			}
 		}
+	}
+
+	private suspend fun obtainClickDept(deptId: Long) {
+		viewState = process(
+			command = DeptCommand.TO_DEPT,
+			viewState = viewState,
+			ignoreSuccess = true,
+			clickDeptId = deptId
+		)
 	}
 
 	private suspend fun getSettings() {
@@ -56,10 +66,11 @@ class DeptViewModel : BaseSharedViewModel<DeptViewState, DeptAction, DeptEvent>(
 suspend fun process(
 	command: DeptCommand,
 	viewState: DeptViewState,
-	ignoreSuccess: Boolean = false
+	ignoreSuccess: Boolean = false,
+	clickDeptId: Long = 0,
 ): DeptViewState {
 	val deptProcessor: DeptProcessor = Inject.instance()
-	val context = viewState.toDeptContext(command = command)
+	val context = viewState.toDeptContext(command = command, clickDeptId)
 	deptProcessor.exec(context)
 	return context.toDeptViewState(ignoreSuccess)
 }

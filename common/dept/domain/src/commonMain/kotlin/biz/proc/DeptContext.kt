@@ -15,6 +15,7 @@ class DeptContext(
 	var onStart: Boolean = true,
 	var currentDeptId: Long = 0,
 	var parentDeptId: Long = 0,
+	var clickDeptId: Long = 0,
 ) : BaseContext() {
 	val deptRepository: DeptRepository = Inject.instance()
 	val authSettings: AuthSettings = Inject.instance()
@@ -29,5 +30,6 @@ class DeptContext(
 enum class DeptCommand : IBaseCommand {
 	GET_SETTINGS,
 	ON_TOP_LEVEL,
+	TO_DEPT,
 	CHANGE_CURRENT_DEPT,
 }

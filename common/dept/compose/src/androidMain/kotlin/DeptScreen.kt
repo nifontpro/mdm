@@ -20,7 +20,7 @@ fun DeptScreen() {
 //	val rootController = LocalRootController.current
 
 	StoredViewModel({ DeptViewModel() }) { viewModel ->
-		val viewState = viewModel.viewStates().observeAsState()
+		val viewState by viewModel.viewStates().observeAsState()
 		val viewAction = viewModel.viewActions().observeAsState()
 		val eventHandler = remember { viewModel::obtainEvent }
 
@@ -37,9 +37,9 @@ fun DeptScreen() {
 		val scaffoldState = rememberScaffoldState()
 		val coroutineScope = rememberCoroutineScope()
 
-		LaunchedEffect(viewState.value.errors) {
-			val errors = viewState.value.errors
-			if (errors.isNotEmpty()) {
+		LaunchedEffect(viewState.errors) {
+			val errors = viewState.errors
+			if (errors.isNotEmpty() && viewState.success) {
 				errors.forEach {
 					scaffoldState.snackbarHostState.showSnackbar(it)
 				}
@@ -49,11 +49,11 @@ fun DeptScreen() {
 		Scaffold(
 			backgroundColor = Color.Black,
 			modifier = Modifier.fillMaxSize(),
-			scaffoldState = scaffoldState // attaching `scaffoldState` to the `Scaffold`
+			scaffoldState = scaffoldState
 		) {
 			DeptView(
 				paddingValues = it,
-				viewState = viewState.value,
+				viewState = viewState,
 				eventHandler = eventHandler
 			)
 		}

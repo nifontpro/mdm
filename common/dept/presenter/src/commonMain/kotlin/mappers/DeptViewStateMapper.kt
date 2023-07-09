@@ -15,12 +15,16 @@ fun DeptContext.toDeptViewState(ignoreSuccess: Boolean = false) = DeptViewState(
 	errors = errors.map { it.message }
 )
 
-fun DeptViewState.toDeptContext(command: DeptCommand) = DeptContext(
+fun DeptViewState.toDeptContext(
+	command: DeptCommand,
+	clickDeptId: Long
+) = DeptContext(
 	command = command,
 	depts = depts,
 	authId = authId,
 	currentDeptId = currentDeptId,
 	parentDeptId = parentId,
 	onStart = onStart,
+	clickDeptId = clickDeptId
 )
 

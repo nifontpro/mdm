@@ -3,8 +3,8 @@ package biz.proc
 import biz.workers.*
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
+import ru.md.cor.worker
 
-@Suppress("RemoveExplicitTypeArguments")
 class DeptProcessor : IBaseProcessor<DeptContext> {
 
 	override suspend fun exec(ctx: DeptContext) = businessChain.exec(ctx)
@@ -27,7 +27,12 @@ class DeptProcessor : IBaseProcessor<DeptContext> {
 			operation("Переход на уровень вверх", DeptCommand.ON_TOP_LEVEL) {
 				getTopLevelDeptAndParentId("Получаем верхний отдел и parentId")
 				getDeptList("Получаем список отделов")
-//				worker("Игнорируем ошибку") { state = ContextState.RUNNING }
+			}
+
+			operation("Переход на отдел", DeptCommand.TO_DEPT) {
+				worker("") { parentDeptId = clickDeptId }
+				getDeptList("Получаем список отделов")
+				saveParentDeptId("Сохраняем родительский отдел")
 			}
 
 			finishOperation()

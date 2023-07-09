@@ -67,7 +67,8 @@ private fun DeptItem(dept: Dept, currentDeptId: Long, eventHandler: (DeptEvent) 
 		modifier = Modifier
 			.fillMaxWidth()
 			.background(if (dept.id == currentDeptId) Color.Gray else Color.Transparent)
-			.padding(4.dp),
+			.padding(4.dp)
+			.clickable { eventHandler(DeptEvent.ClickDept(dept.id)) },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceBetween
 	) {
