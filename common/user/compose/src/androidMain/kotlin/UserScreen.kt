@@ -16,7 +16,6 @@ import vm.UserViewModel
 @Composable
 fun UserScreen() {
 //	val rootController = LocalRootController.current
-
 	StoredViewModel({ UserViewModel() }) { viewModel ->
 		val viewState by viewModel.viewStates().observeAsState()
 		val viewAction = viewModel.viewActions().observeAsState()

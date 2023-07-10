@@ -2,9 +2,8 @@ package navigation
 
 import DeptScreen
 import UserScreen
-import androidx.compose.material.Text
-import androidx.compose.ui.graphics.Color
 import navigation.tabs.*
+import navigation.test.TestScreen
 import profile.ProfileScreen
 import ru.alexgladkov.odyssey.compose.extensions.bottomNavigation
 import ru.alexgladkov.odyssey.compose.extensions.screen
@@ -30,7 +29,7 @@ fun RootComposeBuilder.mainFlow() {
 
 		tab(AwardTab()) {
 			screen(name = NavigationTree.Main.Awards.name) {
-				Text("Awards", color = Color.Cyan)
+				TestScreen()
 			}
 		}
 
