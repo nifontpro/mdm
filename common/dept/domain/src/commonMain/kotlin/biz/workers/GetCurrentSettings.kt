@@ -8,9 +8,9 @@ import model.request.GetAuthDeptRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun ICorChainDsl<DeptContext>.getCurrentSettings(title: String) = worker {
+fun ICorChainDsl<DeptContext>.getDeptCurrentSettings(title: String) = worker {
 	this.title = title
-	on { !onStart && state == ContextState.RUNNING && !onStart }
+	on { !onStart && state == ContextState.RUNNING}
 
 	handle {
 

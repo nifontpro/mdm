@@ -10,6 +10,7 @@ kotlin {
 			dependencies {
 				implementation(Dependencies.Kotlin.Serialization.serialization)
 				implementation(project(":common:base:domain"))
+				implementation(project(":common:user:domain"))
 			}
 		}
 	}

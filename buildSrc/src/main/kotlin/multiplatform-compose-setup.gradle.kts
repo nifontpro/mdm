@@ -32,6 +32,7 @@ kotlin {
 				implementation(Dependencies.Android.Compose.material)
 				implementation(Dependencies.Android.Compose.tooling)
 				implementation(Dependencies.Android.Compose.icons)
+				implementation(Dependencies.Android.composeActivity)
 			}
 		}
 	}

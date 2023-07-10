@@ -7,7 +7,6 @@ kotlin {
 	sourceSets {
 		androidMain {
 			dependencies {
-				implementation(Dependencies.Android.composeActivity)
 				implementation(Dependencies.Image.Coil.core)
 				implementation(Dependencies.Image.Coil.compose)
 			}

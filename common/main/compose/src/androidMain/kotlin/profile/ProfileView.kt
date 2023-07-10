@@ -2,12 +2,7 @@ package profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import model.User
 import profile.models.ProfileEvent
 import profile.models.ProfileViewState
 import theme.Theme
-import user.User
 
 @Composable
 fun ProfileView(viewState: ProfileViewState, eventHandler: (ProfileEvent) -> Unit) {
@@ -67,9 +62,11 @@ private fun ProfileItem(user: User, authId: Long, eventHandler: (ProfileEvent) -
 			contentDescription = "user"
 		)
 
-		Column(modifier = Modifier
-			.padding(horizontal = 8.dp)
-			.weight(1f)) {
+		Column(
+			modifier = Modifier
+				.padding(horizontal = 8.dp)
+				.weight(1f)
+		) {
 			Text(
 				modifier = Modifier.padding(top = 4.dp),
 				text = user.getFIO(),

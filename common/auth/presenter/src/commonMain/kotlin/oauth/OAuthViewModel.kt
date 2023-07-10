@@ -1,17 +1,17 @@
 package oauth
 
+import auth.model.Tokens
 import auth.repo.AuthSettings
-import model.response.BaseResponse
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
 import logger.KLog
-import auth.model.Tokens
+import model.User
+import model.response.BaseResponse
 import oauth.models.OAuthAction
 import oauth.models.OAuthEvent
 import oauth.models.OAuthViewState
 import repo.AuthRepository
-import user.User
 
 class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEvent>(
 	initialState = OAuthViewState(isAuth = false, tokens = Tokens())

@@ -9,6 +9,7 @@ kotlin {
 			dependencies {
 				implementation(project(":common:auth:domain"))
 				implementation(project(":common:main:domain"))
+				implementation(project(":common:user:domain"))
 				implementation(project(":common:core"))
 				implementation(project(":common:base:domain"))
 				implementation(project(":common:settings:domain"))

@@ -4,15 +4,13 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import kotlinx.coroutines.launch
 import models.DeptAction
 import models.DeptEvent
+import utils.OnLifecycleEvent
 import vm.DeptViewModel
 
 @Composable
@@ -69,24 +67,6 @@ fun DeptScreen() {
 				}
 				eventHandler(DeptEvent.Clear)
 			}
-		}
-	}
-}
-
-@Composable
-fun OnLifecycleEvent(onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit) {
-	val eventHandler = rememberUpdatedState(onEvent)
-	val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
-
-	DisposableEffect(lifecycleOwner.value) {
-		val lifecycle = lifecycleOwner.value.lifecycle
-		val observer = LifecycleEventObserver { owner, event ->
-			eventHandler.value(owner, event)
-		}
-
-		lifecycle.addObserver(observer)
-		onDispose {
-			lifecycle.removeObserver(observer)
 		}
 	}
 }

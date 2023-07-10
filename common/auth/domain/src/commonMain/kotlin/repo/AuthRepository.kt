@@ -1,7 +1,7 @@
 package repo
 
+import model.User
 import model.response.BaseResponse
-import user.User
 
 interface AuthRepository {
 	suspend fun getProfiles(): BaseResponse<List<User>>

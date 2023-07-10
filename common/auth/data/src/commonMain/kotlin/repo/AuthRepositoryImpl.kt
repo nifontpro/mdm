@@ -2,8 +2,8 @@ package repo
 
 import auth.repo.AuthSettings
 import ktor.AuthRemoteDataSource
+import model.User
 import model.response.BaseResponse
-import user.User
 
 class AuthRepositoryImpl(
 	private val remoteDataSource: AuthRemoteDataSource,

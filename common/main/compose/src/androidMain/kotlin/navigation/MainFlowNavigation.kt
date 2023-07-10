@@ -1,6 +1,7 @@
 package navigation
 
 import DeptScreen
+import UserScreen
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
 import navigation.tabs.*
@@ -23,7 +24,7 @@ fun RootComposeBuilder.mainFlow() {
 
 		tab(UserTab()) {
 			screen(name = NavigationTree.Main.Users.name) {
-				Text("Users", color = Color.Cyan)
+				UserScreen()
 			}
 		}
 

@@ -6,9 +6,9 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import logger.KLog
+import model.User
 import model.response.BaseResponse
 import url.CLIENT_URL
-import user.User
 
 class AuthRemoteDataSource(
 	private val httpClient: HttpClient,

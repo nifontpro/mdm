@@ -11,6 +11,7 @@ kotlin {
 				implementation(project(":common:core-compose"))
 				implementation(project(":common:core-utils"))
 				implementation(project(":common:base:domain"))
+				implementation(project(":common:user:domain"))
 
 				implementation(Dependencies.Other.ViewModel.core)
 				implementation(Dependencies.Other.ViewModel.compose)
@@ -24,6 +25,7 @@ kotlin {
 		androidMain {
 			dependencies {
 				implementation(project(":common:dept:compose"))
+				implementation(project(":common:user:compose"))
 				implementation(Dependencies.Image.Coil.core)
 				implementation(Dependencies.Image.Coil.compose)
 			}

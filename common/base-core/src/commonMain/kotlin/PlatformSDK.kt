@@ -26,6 +26,8 @@ object PlatformSDK {
 					authModule,
 					deptDataModule,
 					deptDomainModule,
+					userDataModule,
+					userDomainModule,
 				)
 			}.direct
 		)

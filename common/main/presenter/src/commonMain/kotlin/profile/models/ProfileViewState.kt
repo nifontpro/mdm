@@ -1,6 +1,6 @@
 package profile.models
 
-import user.User
+import model.User
 
 data class ProfileViewState(
 	val username: String,
