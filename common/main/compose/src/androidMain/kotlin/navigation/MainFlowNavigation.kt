@@ -3,7 +3,7 @@ package navigation
 import DeptScreen
 import UserScreen
 import navigation.tabs.*
-import navigation.test.TestScreen
+import navigation.test.TestScreenTwo
 import profile.ProfileScreen
 import ru.alexgladkov.odyssey.compose.extensions.bottomNavigation
 import ru.alexgladkov.odyssey.compose.extensions.screen
@@ -29,7 +29,7 @@ fun RootComposeBuilder.mainFlow() {
 
 		tab(AwardTab()) {
 			screen(name = NavigationTree.Main.Awards.name) {
-				TestScreen()
+				TestScreenTwo()
 			}
 		}
 
