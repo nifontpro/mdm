@@ -11,7 +11,7 @@ abstract class BaseContext(
 	open var authId: Long = 0,
 
 	var authEmail: String = "",
-	var pageInfo: PageInfo? = null,
+	open var pageInfo: PageInfo = PageInfo(),
 //	var baseQuery: BaseQuery = BaseQuery(),
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
 )

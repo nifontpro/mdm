@@ -7,7 +7,7 @@ import logger.KLog
 import model.User
 import model.request.GetUsersByDeptRequest
 import model.response.BaseResponse
-import url.CLIENT_URL
+import constants.CLIENT_URL
 
 class UserRemoteDataSource(private val httpClient: HttpClient) {
 

@@ -3,7 +3,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +18,7 @@ import model.User
 import model.UserEvent
 import model.UserViewState
 import theme.Theme
+import utils.CheckNextItemsLoad
 
 @Composable
 fun UserView(paddingValues: PaddingValues, viewState: UserViewState, eventHandler: (UserEvent) -> Unit) {
@@ -26,20 +26,22 @@ fun UserView(paddingValues: PaddingValues, viewState: UserViewState, eventHandle
 		Column(
 			modifier = Modifier.padding(paddingValues)
 		) {
-			Row {
-				Button(onClick = { eventHandler(UserEvent.OnTopLevel) }) {
-					Text("Top")
-				}
-				Button(onClick = { eventHandler(UserEvent.OnTest("Test data")) }) {
-					Text("Test")
-				}
-			}
 			LazyColumn(
 				modifier = Modifier
 					.fillMaxWidth()
 			) {
-				items(items = viewState.users) { dept ->
-					UserItem(user = dept, eventHandler = eventHandler)
+				val users = viewState.users
+				items(users.size) { i ->
+					val user = viewState.users[i]
+					CheckNextItemsLoad(
+						pageInfo = viewState.pageInfo,
+						size = users.size,
+						i = i,
+						isLoading = viewState.isLoading
+					) {
+						eventHandler(UserEvent.OnLoadNextPage)
+					}
+					UserItem(user = user, eventHandler = eventHandler)
 				}
 			}
 		}

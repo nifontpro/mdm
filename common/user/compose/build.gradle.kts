@@ -13,6 +13,7 @@ kotlin {
 		}
 		commonMain {
 			dependencies {
+				implementation(project(":common:base:domain"))
 				implementation(project(":common:user:domain"))
 				implementation(project(":common:user:presenter"))
 				implementation(project(":common:core-compose"))

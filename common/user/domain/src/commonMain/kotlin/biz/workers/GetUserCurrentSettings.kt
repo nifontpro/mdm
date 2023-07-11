@@ -5,12 +5,13 @@ import biz.proc.ContextState
 import biz.proc.DeptIdEmptyError
 import biz.proc.UserContext
 import logger.KLog
+import model.response.PageInfo
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
 fun ICorChainDsl<UserContext>.getUserCurrentSettings(title: String) = worker {
 	this.title = title
-	on { !onStart && state == ContextState.RUNNING}
+	on { !onStart && state == ContextState.RUNNING }
 
 	handle {
 
@@ -27,7 +28,10 @@ fun ICorChainDsl<UserContext>.getUserCurrentSettings(title: String) = worker {
 			return@handle
 		}
 
+		// При смене отдела обнуляем данные:
 		deptId = newDeptId
+		pageInfo = PageInfo()
+		users = emptyList()
 
 		authId = authSettings.getAuthId()
 		if (authId == 0L) {
