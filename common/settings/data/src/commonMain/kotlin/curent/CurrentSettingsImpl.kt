@@ -32,8 +32,17 @@ class CurrentSettingsImpl(
 		return settings.remove(PARENT_DEPT_ID)
 	}
 
+	override fun saveAuthId(authId: Long) {
+		settings.putLong(AUTH_ID, authId)
+	}
+
+	override fun getAuthId(): Long {
+		return settings[AUTH_ID, 0L]
+	}
+
 	companion object {
 		private const val CURRENT_DEPT_ID = "current_dept_id"
 		private const val PARENT_DEPT_ID = "parent_dept_id"
+		const val AUTH_ID = "auth_id"
 	}
 }

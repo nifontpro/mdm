@@ -1,7 +1,5 @@
 package biz.proc
 
-import auth.repo.AuthSettings
-import curent.repo.CurrentSettings
 import di.Inject
 import model.User
 import model.response.PageInfo
@@ -11,17 +9,15 @@ class UserContext(
 	override var command: IBaseCommand,
 	override var authId: Long = 0,
 	override var pageInfo: PageInfo = PageInfo(),
-	var deptId: Long = 0,
-//	var user: User = User(),
+	override var deptId: Long = 0,
+	override var onStart: Boolean = true,
+
 	var users: List<User> = emptyList(),
 
-	var onStart: Boolean = true,
-	var clickUserId: Long = 0,
-	var isLoading: Boolean = false,
+//	var clickUserId: Long = 0,
+	override var isLoading: Boolean = false,
 ) : BaseContext() {
 	val userRepository: UserRepository = Inject.instance()
-	val authSettings: AuthSettings = Inject.instance()
-	val currentSettings: CurrentSettings = Inject.instance()
 
 	companion object {
 		const val REPO = "User"

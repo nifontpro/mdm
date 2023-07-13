@@ -1,6 +1,9 @@
 package biz.proc
 
 import biz.workers.*
+import biz.workers.operation.finishOperation
+import biz.workers.operation.initStatus
+import biz.workers.operation.operation
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
 
@@ -14,9 +17,9 @@ class UserProcessor : IBaseProcessor<UserContext> {
 			initStatus()
 
 			operation("Чтение настроек", UserCommand.GET_SETTINGS) {
-				getUserCurrentSettings("Получаем начальные настройки")
-				getUserCurrentSettingsOnStart("Получаем начальные настройки")
-//				getUserList("Получаем список сотрудников отдела")
+				getCurrentAuthIdAndDeptId("Получаем начальные настройки")
+				getCurrentAuthIdAndDeptIdOnStart("Получаем начальные настройки")
+				checkClearUsers("Очищаем список по требованию")
 				getUsersNextPage("Получаем следующую страницу сотрудников")
 			}
 

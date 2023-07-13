@@ -12,6 +12,4 @@ interface AuthSettings {
 	fun getRefreshToken(): String
 	fun saveIdToken(refreshToken: String)
 	fun getIdToken(): String
-	fun saveAuthId(authId: Long)
-	fun getAuthId(): Long
 }

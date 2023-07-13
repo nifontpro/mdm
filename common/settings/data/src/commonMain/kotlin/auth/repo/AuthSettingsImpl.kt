@@ -3,6 +3,7 @@ package auth.repo
 import auth.model.Tokens
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
+import curent.CurrentSettingsImpl.Companion.AUTH_ID
 
 class AuthSettingsImpl(
 	private val settings: Settings
@@ -53,18 +54,9 @@ class AuthSettingsImpl(
 		return settings[ID_TOKEN, ""]
 	}
 
-	override fun saveAuthId(authId: Long) {
-		settings.putLong(AUTH_ID, authId)
-	}
-
-	override fun getAuthId(): Long {
-		return settings[AUTH_ID, 0L]
-	}
-
 	companion object {
 		private const val ACCESS_TOKEN = "access_token"
 		private const val REFRESH_TOKEN = "refresh_token"
 		private const val ID_TOKEN = "id_token"
-		private const val AUTH_ID = "auth_id"
 	}
 }

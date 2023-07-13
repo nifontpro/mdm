@@ -15,7 +15,6 @@ kotlin {
 				implementation(project(":common:cor"))
 
 				implementation(project(":common:base:domain"))
-				implementation(project(":common:settings:domain"))
 			}
 		}
 	}

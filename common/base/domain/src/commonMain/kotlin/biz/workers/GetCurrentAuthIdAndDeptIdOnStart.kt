@@ -1,22 +1,19 @@
 package biz.workers
 
-import biz.proc.AuthIdEmptyError
-import biz.proc.ContextState
-import biz.proc.DeptIdEmptyError
-import biz.proc.UserContext
+import biz.proc.*
 import logger.KLog
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun ICorChainDsl<UserContext>.getUserCurrentSettingsOnStart(title: String) = worker {
+fun <T : BaseContext> ICorChainDsl<T>.getCurrentAuthIdAndDeptIdOnStart(title: String) = worker {
 	this.title = title
-	on { onStart && state == ContextState.RUNNING}
+	on { onStart && state == ContextState.RUNNING }
 
 	handle {
 
 		onStart = false
 
-		authId = authSettings.getAuthId()
+		authId = currentSettings.getAuthId()
 		if (authId == 0L) {
 			AuthIdEmptyError()
 			return@handle

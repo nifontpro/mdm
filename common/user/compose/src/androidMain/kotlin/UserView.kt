@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +43,16 @@ fun UserView(paddingValues: PaddingValues, viewState: UserViewState, eventHandle
 						eventHandler(UserEvent.OnLoadNextPage)
 					}
 					UserItem(user = user, eventHandler = eventHandler)
+				}
+				item {
+					if (viewState.isLoading) {
+						Box(modifier = Modifier.fillMaxWidth()) {
+							CircularProgressIndicator(
+								modifier = Modifier
+									.align(Alignment.Center)
+							)
+						}
+					}
 				}
 			}
 		}

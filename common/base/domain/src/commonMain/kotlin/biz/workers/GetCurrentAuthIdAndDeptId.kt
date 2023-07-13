@@ -1,22 +1,22 @@
 package biz.workers
 
 import biz.proc.AuthIdEmptyError
+import biz.proc.BaseContext
 import biz.proc.ContextState
 import biz.proc.DeptIdEmptyError
-import biz.proc.UserContext
 import logger.KLog
 import model.response.PageInfo
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun ICorChainDsl<UserContext>.getUserCurrentSettings(title: String) = worker {
+fun <T : BaseContext> ICorChainDsl<T>.getCurrentAuthIdAndDeptId(title: String) = worker {
 	this.title = title
 	on { !onStart && state == ContextState.RUNNING }
 
 	handle {
 
 		val newDeptId = currentSettings.getCurrentDeptId()
-		KLog.i("User", "On Resume newDeptId=$newDeptId")
+		KLog.i("Settings", "On Resume newDeptId=$newDeptId")
 		if (newDeptId == 0L) {
 			DeptIdEmptyError()
 			return@handle
@@ -31,14 +31,12 @@ fun ICorChainDsl<UserContext>.getUserCurrentSettings(title: String) = worker {
 		// При смене отдела обнуляем данные:
 		deptId = newDeptId
 		pageInfo = PageInfo()
-		users = emptyList()
+		clearData = true
 
-		authId = authSettings.getAuthId()
+		authId = currentSettings.getAuthId()
 		if (authId == 0L) {
 			AuthIdEmptyError()
 			return@handle
 		}
-
-
 	}
 }

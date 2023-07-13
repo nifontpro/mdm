@@ -28,6 +28,8 @@ object PlatformSDK {
 					deptDomainModule,
 					userDataModule,
 					userDomainModule,
+					eventDataModule,
+					eventDomainModule
 				)
 			}.direct
 		)

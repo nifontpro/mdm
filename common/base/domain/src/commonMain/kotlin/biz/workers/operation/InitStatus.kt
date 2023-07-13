@@ -1,4 +1,4 @@
-package biz.workers
+package biz.workers.operation
 
 import biz.proc.BaseContext
 import biz.proc.ContextState

@@ -23,3 +23,13 @@ fun BaseContext.AuthIdEmptyError() {
 		)
 	)
 }
+
+fun BaseContext.DeptIdEmptyError() {
+	fail(
+		errorValidation(
+			field = "deptId",
+			violationCode = "empty",
+			description = "Отдел не выбран"
+		)
+	)
+}

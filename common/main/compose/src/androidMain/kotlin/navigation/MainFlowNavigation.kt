@@ -1,9 +1,9 @@
 package navigation
 
 import DeptScreen
+import EventScreen
 import UserScreen
 import navigation.tabs.*
-import navigation.test.TestScreen
 import profile.ProfileScreen
 import ru.alexgladkov.odyssey.compose.extensions.bottomNavigation
 import ru.alexgladkov.odyssey.compose.extensions.screen
@@ -27,9 +27,9 @@ fun RootComposeBuilder.mainFlow() {
 			}
 		}
 
-		tab(AwardTab()) {
+		tab(EventTab()) {
 			screen(name = NavigationTree.Main.Awards.name) {
-				TestScreen()
+				EventScreen()
 			}
 		}
 
