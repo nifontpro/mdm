@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 import logger.KLog
 import model.User
 import model.response.BaseResponse
-import url.CLIENT_URL
+import constants.CLIENT_URL
 
 class AuthRemoteDataSource(
 	private val httpClient: HttpClient,

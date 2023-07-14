@@ -1,24 +1,23 @@
 package biz.proc
 
-import auth.repo.AuthSettings
-import curent.repo.CurrentSettings
 import di.Inject
 import model.User
+import model.response.PageInfo
 import repo.UserRepository
 
 class UserContext(
 	override var command: IBaseCommand,
 	override var authId: Long = 0,
-	var deptId: Long = 0,
-//	var user: User = User(),
+	override var pageInfo: PageInfo = PageInfo(),
+	override var deptId: Long = 0,
+	override var onStart: Boolean = true,
+
 	var users: List<User> = emptyList(),
 
-	var onStart: Boolean = true,
-	var clickUserId: Long = 0,
+//	var clickUserId: Long = 0,
+	override var isLoading: Boolean = false,
 ) : BaseContext() {
 	val userRepository: UserRepository = Inject.instance()
-	val authSettings: AuthSettings = Inject.instance()
-	val currentSettings: CurrentSettings = Inject.instance()
 
 	companion object {
 		const val REPO = "User"
@@ -28,4 +27,5 @@ class UserContext(
 
 enum class UserCommand : IBaseCommand {
 	GET_SETTINGS,
+	GET_USERS_NEXT_PAGE
 }

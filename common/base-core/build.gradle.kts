@@ -19,6 +19,9 @@ kotlin {
 				implementation(project(":common:user:data"))
 				implementation(project(":common:user:domain"))
 
+				implementation(project(":common:event:data"))
+				implementation(project(":common:event:domain"))
+
 				implementation(Dependencies.Kodein.core)
 			}
 		}

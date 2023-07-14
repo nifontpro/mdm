@@ -1,4 +1,14 @@
 plugins {
-    id("multiplatform-compose-setup")
-    id("android-setup")
+	id("multiplatform-compose-setup")
+	id("android-setup")
+}
+
+kotlin {
+	sourceSets {
+		commonMain {
+			dependencies {
+				implementation(project(":common:base:domain"))
+			}
+		}
+	}
 }

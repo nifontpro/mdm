@@ -1,6 +1,9 @@
 package biz.proc
 
 import biz.workers.*
+import biz.workers.operation.finishOperation
+import biz.workers.operation.initStatus
+import biz.workers.operation.operation
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
 

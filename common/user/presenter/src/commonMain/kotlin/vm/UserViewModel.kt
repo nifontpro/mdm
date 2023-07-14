@@ -5,6 +5,7 @@ import biz.proc.UserProcessor
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
+import logger.KLog
 import mappers.toUserContext
 import mappers.toUserViewState
 import model.UserAction
@@ -19,15 +20,15 @@ class UserViewModel : BaseSharedViewModel<UserViewState, UserAction, UserEvent>(
 		viewModelScope.launch {
 			when (viewEvent) {
 				UserEvent.OnResume -> getSettings()
-				UserEvent.OnTopLevel -> onTopLevel()
 				is UserEvent.OnTest -> onTest(message = viewEvent.message)
 				UserEvent.Clear -> viewAction = null
 				is UserEvent.ClickUser -> obtainUserClick(deptId = viewEvent.deptId)
+				UserEvent.OnLoadNextPage -> obtainLoadNextPage()
 			}
 		}
 	}
 
-	private suspend fun obtainUserClick(deptId: Long) {
+	private fun obtainUserClick(deptId: Long) {
 //		viewState = process(
 //			command = DeptCommand.TO_DEPT,
 //			viewState = viewState,
@@ -40,13 +41,10 @@ class UserViewModel : BaseSharedViewModel<UserViewState, UserAction, UserEvent>(
 		viewState = process(command = UserCommand.GET_SETTINGS, viewState = viewState)
 	}
 
-	private suspend fun onTopLevel() {
-//		viewState = process(
-//			command = DeptCommand.ON_TOP_LEVEL,
-//			viewState = viewState,
-//			ignoreSuccess = true
-//		)
-
+	private suspend fun obtainLoadNextPage() {
+		KLog.d("User", "Is Next page Loading...")
+		viewState = viewState.copy(isLoading = true)
+		viewState = process(command = UserCommand.GET_USERS_NEXT_PAGE, viewState = viewState)
 	}
 
 	private fun onTest(message: String) {

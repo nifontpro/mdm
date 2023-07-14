@@ -6,6 +6,7 @@ import biz.proc.UserContext
 import biz.proc.UserContext.Companion.REPO
 import biz.proc.getUserError
 import logger.KLog
+import model.request.BaseRequest
 import model.request.GetUsersByDeptRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
@@ -22,7 +23,10 @@ fun ICorChainDsl<UserContext>.getUserList(title: String) = worker {
 			userRepository.getByDept(
 				request = GetUsersByDeptRequest(
 					authId = authId,
-					deptId = deptId
+					deptId = deptId,
+					baseRequest = BaseRequest(
+
+					)
 				)
 			)
 		} ?: return@handle

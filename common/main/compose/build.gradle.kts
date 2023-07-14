@@ -26,6 +26,7 @@ kotlin {
 			dependencies {
 				implementation(project(":common:dept:compose"))
 				implementation(project(":common:user:compose"))
+				implementation(project(":common:event:compose"))
 				implementation(Dependencies.Image.Coil.core)
 				implementation(Dependencies.Image.Coil.compose)
 			}

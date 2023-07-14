@@ -10,7 +10,7 @@ import model.request.GetAuthDeptRequest
 import model.request.GetCurrentDeptsRequest
 import model.request.GetDeptByIdRequest
 import model.response.BaseResponse
-import url.CLIENT_URL
+import constants.CLIENT_URL
 
 class DeptRemoteDataSource(private val httpClient: HttpClient) {
 

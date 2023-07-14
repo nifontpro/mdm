@@ -14,7 +14,7 @@ fun ICorChainDsl<DeptContext>.getDeptCurrentSettings(title: String) = worker {
 
 	handle {
 
-		val newAuthId = authSettings.getAuthId()
+		val newAuthId = currentSettings.getAuthId()
 		if (newAuthId == 0L) {
 			AuthIdEmptyError()
 			return@handle

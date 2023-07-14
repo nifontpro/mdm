@@ -11,7 +11,9 @@ fun UserContext.toUserViewState(ignoreSuccess: Boolean = false) = UserViewState(
 	deptId = deptId,
 	onStart = onStart,
 	success = if (ignoreSuccess) true else state == ContextState.FINISHING,
-	errors = errors.map { it.message }
+	errors = errors.map { it.message },
+	pageInfo = pageInfo,
+	isLoading = isLoading,
 )
 
 fun UserViewState.toUserContext(
@@ -23,5 +25,7 @@ fun UserViewState.toUserContext(
 	authId = authId,
 	deptId = deptId,
 	onStart = onStart,
+	pageInfo = pageInfo,
+	isLoading = isLoading
 )
 

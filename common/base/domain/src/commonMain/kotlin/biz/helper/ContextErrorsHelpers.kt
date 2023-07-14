@@ -5,6 +5,7 @@ package biz.helper
 import biz.proc.BaseContext
 import biz.proc.ContextState
 import model.response.BaseResponse
+import model.response.PageInfo
 
 fun BaseContext.addError(error: ContextError) = errors.add(error)
 
@@ -16,7 +17,7 @@ fun BaseContext.fail(error: ContextError) {
 suspend fun <T> BaseContext.checkResponse(operation: suspend () -> BaseResponse<T>): T? {
 	val result = operation()
 	return if (result.success) {
-		pageInfo = result.pageInfo
+		pageInfo = result.pageInfo ?: PageInfo()
 		result.data
 	} else {
 		errors.addAll(result.errors)

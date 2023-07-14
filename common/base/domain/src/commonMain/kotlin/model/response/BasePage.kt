@@ -3,16 +3,10 @@ package model.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PageResult<R>(
-	val data: List<R>,
-	val pageInfo: PageInfo
-)
-
-@Serializable
 data class PageInfo(
-	val pageSize: Int,
-	val pageNumber: Int,
-	val numberOfElements: Int,
-	val totalPages: Int,
-	val totalElements: Long,
+	val pageSize: Int = 0,
+	val pageNumber: Int = 0,
+	val numberOfElements: Int = 0,
+	val totalPages: Int = 0,
+	val totalElements: Long = 0,
 )

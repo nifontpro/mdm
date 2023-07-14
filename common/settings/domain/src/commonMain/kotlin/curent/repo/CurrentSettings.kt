@@ -7,4 +7,6 @@ interface CurrentSettings {
 	fun saveParentDeptId(deptId: Long)
 	fun getParentDeptId(): Long
 	fun removeParentDeptId()
+	fun saveAuthId(authId: Long)
+	fun getAuthId(): Long
 }

@@ -16,7 +16,7 @@ fun ICorChainDsl<DeptContext>.getSettingsOnStart(title: String) = worker {
 	handle {
 
 		onStart = false
-		authId = authSettings.getAuthId()
+		authId = currentSettings.getAuthId()
 
 		if (authId == 0L) {
 			AuthIdEmptyError()
