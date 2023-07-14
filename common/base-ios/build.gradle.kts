@@ -1,4 +1,4 @@
-plugins {
+ plugins {
 	id("multiplatform-setup")
 	id("android-setup")
 	kotlin("native.cocoapods")
@@ -17,7 +17,7 @@ kotlin {
 		framework {
 			transitiveExport = false
 			baseName = "SharedSDK"
-//			isStatic = true
+//			isStatic = true // по умолчанию false
 			export(project(":common:core"))
 			export(project(":common:base-core"))
 			export(project(":common:core-utils"))
@@ -45,14 +45,19 @@ kotlin {
 		val iosArm64Main by getting
 		val iosSimulatorArm64Main by getting
 
-		@Suppress("UNUSED_VARIABLE")
 		val iosMain by creating {
 			dependencies {
 				api(project(":common:core"))
 				api(project(":common:base-core"))
 				api(project(":common:core-utils"))
 				api(project(":common:auth:domain"))
-//				api(project(":common:auth:presenter"))
+				api(project(":common:auth:presenter"))
+				api(project(":common:dept:domain"))
+				api(project(":common:dept:presenter"))
+				api(project(":common:user:domain"))
+				api(project(":common:user:presenter"))
+				api(project(":common:event:domain"))
+				api(project(":common:event:presenter"))
 
 			}
 			dependsOn(commonMain)
