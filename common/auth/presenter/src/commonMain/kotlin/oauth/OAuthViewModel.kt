@@ -30,7 +30,15 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 			OAuthEvent.RemoveTokens -> removeTokens()
 			OAuthEvent.ProfilesClick -> getProfiles()
 			OAuthEvent.MainFlowClick -> mainFlowAction()
+			is OAuthEvent.EmailChanged -> obtainEmailChanged(viewEvent.value)
 		}
+	}
+
+	private fun obtainEmailChanged(value: String) {
+		println("Email: $value")
+		viewState = viewState.copy(
+			email = value
+		)
 	}
 
 	private fun mainFlowAction() {
@@ -49,6 +57,7 @@ class OAuthViewModel : BaseSharedViewModel<OAuthViewState, OAuthAction, OAuthEve
 	}
 
 	private fun loginAction() {
+		KLog.i("Auth", "Login event")
 		viewAction = OAuthAction.LoginAction
 	}
 

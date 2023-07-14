@@ -2,11 +2,11 @@ import SwiftUI
  import SharedSDK
 
 struct ContentView: View {
-    
-    let greet = Greeting().greet()
-
+        
 	var body: some View {
-		Text(greet)
+        LoginView()
+            .background(Color.backgroundPrimary)
+            .background(ignoresSafeAreaEdges: [.all])
 	}
 }
 

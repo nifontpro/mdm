@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Medalist iOS SDK'
     spec.vendored_frameworks      = 'build/cocoapods/framework/SharedSDK.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target = '14.1'
+    spec.ios.deployment_target = '16.0'
                 
                 
     spec.pod_target_xcconfig = {

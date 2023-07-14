@@ -11,7 +11,7 @@ kotlin {
 		summary = "Medalist iOS SDK"
 		homepage = "https://nifontbus.ru"
 		version = "1.0"
-		ios.deploymentTarget = "14.1"
+		ios.deploymentTarget = "16.0"
 //		podfile = project.file("../../iosApp/Podfile")
 
 		framework {
@@ -22,7 +22,8 @@ kotlin {
 			export(project(":common:base-core"))
 			export(project(":common:core-utils"))
 			export(project(":common:auth:domain"))
-//		export(project(":common:auth:presenter"))
+			export(project(":common:auth:domain"))
+			export(project(":common:auth:presenter"))
 //
 //			binaryOption("bundledId", "ru.nb.mdm")
 //			binaryOption("bundledVersion", "1")
@@ -36,8 +37,13 @@ kotlin {
 				implementation(project(":common:base-core"))
 				implementation(project(":common:core-utils"))
 				implementation(project(":common:auth:domain"))
-//				implementation(project(":common:auth:presenter"))
-
+				implementation(project(":common:auth:presenter"))
+				implementation(project(":common:dept:domain"))
+				implementation(project(":common:dept:presenter"))
+				implementation(project(":common:user:domain"))
+				implementation(project(":common:user:presenter"))
+				implementation(project(":common:event:domain"))
+				implementation(project(":common:event:presenter"))
 			}
 		}
 
@@ -50,15 +56,9 @@ kotlin {
 				api(project(":common:core"))
 				api(project(":common:base-core"))
 				api(project(":common:core-utils"))
+
 				api(project(":common:auth:domain"))
 				api(project(":common:auth:presenter"))
-				api(project(":common:dept:domain"))
-				api(project(":common:dept:presenter"))
-				api(project(":common:user:domain"))
-				api(project(":common:user:presenter"))
-				api(project(":common:event:domain"))
-				api(project(":common:event:presenter"))
-
 			}
 			dependsOn(commonMain)
 			iosX64Main.dependsOn(this)
