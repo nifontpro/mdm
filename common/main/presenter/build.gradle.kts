@@ -7,7 +7,6 @@ kotlin {
 	sourceSets {
 		commonMain {
 			dependencies {
-				implementation(project(":common:auth:domain"))
 				implementation(project(":common:main:domain"))
 				implementation(project(":common:user:domain"))
 				implementation(project(":common:core"))

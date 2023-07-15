@@ -9,8 +9,13 @@ kotlin {
 		commonMain {
 			dependencies {
 				implementation(Dependencies.Kotlin.Serialization.serialization)
+				implementation(Dependencies.Kodein.core)
+
+				implementation(project(":common:core"))
+				implementation(project(":common:cor"))
+
 				implementation(project(":common:base:domain"))
-				implementation(project(":common:user:domain"))
+//				implementation(project(":common:user:domain"))
 			}
 		}
 	}

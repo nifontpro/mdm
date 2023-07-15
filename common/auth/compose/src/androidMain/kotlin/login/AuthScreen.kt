@@ -1,4 +1,4 @@
-package oauth
+package login
 
 import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
@@ -12,26 +12,27 @@ import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import navigation.NavigationTree
 import net.openid.appauth.AuthorizationService
-import oauth.repo.AppAuth
-import oauth.repo.loginLauncher
-import oauth.repo.logoutLauncher
-import oauth.models.OAuthAction
-import oauth.models.OAuthEvent
+import login.repo.AppAuth
+import login.repo.loginLauncher
+import login.repo.logoutLauncher
+import models.AuthAction
+import models.AuthEvent
 import ru.alexgladkov.odyssey.compose.extensions.present
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import ru.alexgladkov.odyssey.core.LaunchFlag
+import vm.AuthViewModel
 
 @Composable
-fun OAuthScreen() {
+fun AuthScreen() {
 
 	val rootController = LocalRootController.current
 
-	StoredViewModel(factory = { OAuthViewModel() }) { viewModel ->
+	StoredViewModel(factory = { AuthViewModel() }) { viewModel ->
 		val state = viewModel.viewStates().observeAsState()
 		val action = viewModel.viewActions().observeAsState()
 		val eventHandler = viewModel::obtainEvent
 
-		OAuthView(
+		AuthView(
 			state = state.value,
 			eventHandler = eventHandler
 		)
@@ -49,7 +50,7 @@ fun OAuthScreen() {
 		LaunchedEffect(key1 = action.value) {
 			when (action.value) {
 				null -> {}
-				OAuthAction.OpenMainFlow -> {
+				AuthAction.OpenMainFlow -> {
 					rootController.findRootController()
 						.present(
 							screen = NavigationTree.Main.Dashboard.name,
@@ -57,7 +58,7 @@ fun OAuthScreen() {
 						)
 				}
 
-				OAuthAction.LoginAction -> {
+				AuthAction.LoginAction -> {
 					val customTabsIntent = CustomTabsIntent.Builder().build()
 					val authRequest = appAuth.getAuthRequest()
 					Log.d(
@@ -72,7 +73,7 @@ fun OAuthScreen() {
 					Log.d("OAuth", "2. Open auth page: ${authRequest.toUri()}")
 				}
 
-				OAuthAction.LogoutAction -> {
+				AuthAction.LogoutAction -> {
 					val idToken = viewModel.getIdToken()
 					if (idToken.isNotBlank()) {
 						val customTabsIntent = CustomTabsIntent.Builder().build()
@@ -82,7 +83,7 @@ fun OAuthScreen() {
 						)
 						logoutLauncher.launch(logoutPageIntent)
 					}
-					eventHandler(OAuthEvent.RemoveTokens)
+					eventHandler(AuthEvent.RemoveTokens)
 				}
 			}
 		}

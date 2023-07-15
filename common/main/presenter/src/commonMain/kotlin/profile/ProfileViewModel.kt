@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import profile.models.ProfileAction
 import profile.models.ProfileEvent
 import profile.models.ProfileViewState
-import repo.AuthRepository
+import repo.UserRepository
 
 class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, ProfileEvent>(
 	initialState = ProfileViewState(
@@ -17,7 +17,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 		profiles = emptyList()
 	)
 ) {
-	private val authRepository: AuthRepository = Inject.instance()
+	private val userRepository: UserRepository = Inject.instance()
 	private val currentSettings: CurrentSettings = Inject.instance()
 
 	init {
@@ -47,7 +47,7 @@ class ProfileViewModel : BaseSharedViewModel<ProfileViewState, ProfileAction, Pr
 
 	private fun getProfiles() {
 		viewModelScope.launch {
-			val response = authRepository.getProfiles()
+			val response = userRepository.getProfiles()
 			if (response.success) {
 				response.data?.let {
 					viewState = viewState.copy(profiles = it)

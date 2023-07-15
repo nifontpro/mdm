@@ -12,6 +12,7 @@ kotlin {
 
 				api(project(":common:settings:data"))
 				implementation(project(":common:auth:data"))
+				implementation(project(":common:auth:domain"))
 
 				implementation(project(":common:dept:data"))
 				implementation(project(":common:dept:domain"))

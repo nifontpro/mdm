@@ -1,4 +1,4 @@
-package oauth.repo
+package login.repo
 
 import android.net.Uri
 import android.util.Log

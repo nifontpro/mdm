@@ -1,4 +1,4 @@
-package oauth.repo
+package login.repo
 
 import android.app.Activity
 import android.util.Log
@@ -11,13 +11,13 @@ import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
-import oauth.models.OAuthEvent
+import models.AuthEvent
 
 @Composable
 fun loginLauncher(
 	appAuth: AppAuth,
 	authService: AuthorizationService,
-	eventHandler: (OAuthEvent) -> Unit
+	eventHandler: (AuthEvent) -> Unit
 ) = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 	val intent = it.data ?: return@rememberLauncherForActivityResult
 	val exception = AuthorizationException.fromIntent(intent)
@@ -34,7 +34,7 @@ fun loginLauncher(
 						"4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}"
 					)
 					val tokens = appAuth.performTokenRequestSuspend(authService, tokenRequest)
-					eventHandler(OAuthEvent.SaveTokens(tokens))
+					eventHandler(AuthEvent.SaveTokens(tokens))
 				}.onSuccess {
 					Log.d("OAuth", "5. Authentication successful!")
 				}.onFailure { tr ->

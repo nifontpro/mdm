@@ -11,7 +11,8 @@ import SharedSDK
 
 struct LoginView: View {
     
-    private let loginViewModel = OAuthViewModel()
+    let viewState: OAuthViewState
+            let eventHandler: (OAuthEvent) -> Void
     
     var body: some View {
         VStack {
@@ -32,7 +33,7 @@ struct LoginView: View {
                 Spacer().frame(height: 50)
                 
                 CommonTextField(hint: "Login", enabled: true, isSecure: false) { newValue in
-                    loginViewModel.obtainEvent(viewEvent: .EmailChanged(value: newValue))
+                    eventHandler(.EmailChanged(value: newValue))
                 }
                 
                 Spacer().frame(height: 24)
@@ -50,11 +51,5 @@ struct LoginView: View {
             }
         }
         
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }

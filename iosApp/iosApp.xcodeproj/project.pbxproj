@@ -16,6 +16,9 @@
 		E96127B92A61503E000D76DF /* Color + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96127B82A61503E000D76DF /* Color + Custom.swift */; };
 		E96127BC2A61686C000D76DF /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96127BB2A61686C000D76DF /* CommonTextField.swift */; };
 		E9CCB3EA2A61A12500D21EEB /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CCB3E92A61A12500D21EEB /* ActionButton.swift */; };
+		E9CCB3EC2A61D90B00D21EEB /* Flow + Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CCB3EB2A61D90B00D21EEB /* Flow + Publisher.swift */; };
+		E9CCB3EE2A61DAEC00D21EEB /* ViewModel + View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CCB3ED2A61DAEC00D21EEB /* ViewModel + View.swift */; };
+		E9CCB3F02A61E31900D21EEB /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CCB3EF2A61E31900D21EEB /* LoginScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		E96127B82A61503E000D76DF /* Color + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Custom.swift"; sourceTree = "<group>"; };
 		E96127BB2A61686C000D76DF /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
 		E9CCB3E92A61A12500D21EEB /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		E9CCB3EB2A61D90B00D21EEB /* Flow + Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow + Publisher.swift"; sourceTree = "<group>"; };
+		E9CCB3ED2A61DAEC00D21EEB /* ViewModel + View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + View.swift"; sourceTree = "<group>"; };
+		E9CCB3EF2A61E31900D21EEB /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				E96127B52A61475C000D76DF /* LoginView.swift */,
+				E9CCB3EF2A61E31900D21EEB /* LoginScreen.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -140,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				E96127B82A61503E000D76DF /* Color + Custom.swift */,
+				E9CCB3EB2A61D90B00D21EEB /* Flow + Publisher.swift */,
+				E9CCB3ED2A61DAEC00D21EEB /* ViewModel + View.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -270,7 +279,10 @@
 			files = (
 				E96127B92A61503E000D76DF /* Color + Custom.swift in Sources */,
 				E96127B62A61475C000D76DF /* LoginView.swift in Sources */,
+				E9CCB3F02A61E31900D21EEB /* LoginScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				E9CCB3EE2A61DAEC00D21EEB /* ViewModel + View.swift in Sources */,
+				E9CCB3EC2A61D90B00D21EEB /* Flow + Publisher.swift in Sources */,
 				E96127BC2A61686C000D76DF /* CommonTextField.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				E9CCB3EA2A61A12500D21EEB /* ActionButton.swift in Sources */,
