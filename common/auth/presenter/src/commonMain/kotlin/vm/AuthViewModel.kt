@@ -3,12 +3,10 @@ package vm
 import auth.model.Tokens
 import auth.repo.AuthSettings
 import biz.proc.AuthCommand
-import biz.proc.AuthContext.Companion.REPO
 import biz.proc.AuthProcessor
 import com.adeo.kviewmodel.BaseSharedViewModel
 import di.Inject
 import kotlinx.coroutines.launch
-import logger.KLog
 import mappers.toAuthContext
 import mappers.toAuthViewState
 import models.AuthAction
@@ -55,11 +53,12 @@ class AuthViewModel : BaseSharedViewModel<AuthViewState, AuthAction, AuthEvent>(
 
 	private fun getAuthState() {
 		viewModelScope.launch {
-			KLog.i(REPO, "Get auth state...")
-			viewState = process(command = AuthCommand.GET_AUTH_STATE)
-			KLog.i(REPO, "state = $viewState")
-			if (viewState.isAuth) {
+			viewState = viewState.copy(isLoading = true)
+			val state = process(command = AuthCommand.GET_AUTH_STATE)
+			if (state.isAuth) {
 				mainFlowAction()
+			} else {
+				viewState = state
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import biz.workers.operation.initStatus
 import biz.workers.operation.operation
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.cor.rootChain
+import ru.md.cor.worker
 
 class AuthProcessor : IBaseProcessor<AuthContext> {
 
@@ -13,11 +14,12 @@ class AuthProcessor : IBaseProcessor<AuthContext> {
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<AuthContext> {
 			initStatus()
 
 			operation("Проверка авторизации", AuthCommand.GET_AUTH_STATE) {
 				getAuthState("Проверяем состояние авторизации пользователя")
+				worker("") { isLoading = false }
 			}
 
 			finishOperation()
